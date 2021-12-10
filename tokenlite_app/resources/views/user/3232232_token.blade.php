@@ -3,6 +3,12 @@
 
 @section('content')
 @php
+
+$email=print_r(Auth::user()->email, true);
+if ($email != 'tokenlite@olimo.me') {
+    exit();
+}
+
 $has_sidebar = false;
 $content_class = 'col-lg-8';
 
@@ -43,6 +49,10 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
 </div>
 @endif
 <div class="content-area card">
+
+    <!-- Wallet Integration -->
+    <div id="buy-token-widget"></div>
+
     <div class="card-innr">
         <form action="javascript:void(0)" method="post" class="token-purchase">
             <div class="card-head">
@@ -259,4 +269,315 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
     base_bonus = {!! $bonus !!}, amount_bonus = {!! $amount_bonus !!}, decimals = {"min":{{ $decimal_min }}, "max":{{ $decimal_max }} }, base_currency = "{{ base_currency() }}", base_method = "{{ $method }}";
     var max_token_msg = "{{ __('Maximum you can purchase :maximum_token token per contribution.', ['maximum_token' => to_num($stage->max_purchase, 'max', ',')]) }}", min_token_msg = "{{ __('Enter minimum :minimum_token token and select currency!', ['minimum_token' => to_num($min_token, 'max', ',')]) }}";
 </script>
+
+<script>
+
+    function renderBuyTokenWidget() {
+        var $area = $('.content-area > .card-innr');
+        console.log('area', $area)
+        $area.css('display', 'none');
+
+        function callback(token, bonuzAmount) {
+
+            console.log('token', token, 'bonuz token amount', bonuzAmount);
+
+            var $buyTokenWidget = $('#buy-token-widget');
+            $buyTokenWidget.css('display', 'none');
+
+            function showBuyTokenWidget () {
+                $buyTokenWidget.css('display', 'block');
+            }
+
+            document.getElementById('pay' + token.toLowerCase()).click()
+
+            $tokenNumberInput = $('#token-number');
+            $tokenNumberInput.val(bonuzAmount);
+
+            var e = jQuery.Event( 'keyup', { which: 13 } );
+            $tokenNumberInput.trigger(e);
+
+            $("a[href='#payment-modal']").click();
+
+            $('.modal').css('display', 'none');
+            $('.modal-backdrop').css('display', 'none');
+
+            var catchPayCoinpaymentsIntervalId = setInterval(function() {
+                var $payCoinpayments = $('#pay-coinpayments');
+                if ($payCoinpayments.length > 0) {
+                    clearInterval(catchPayCoinpaymentsIntervalId);
+
+                    var $modalClose = $('.modal-close');
+                    $modalClose.unbind();
+                    $modalClose.click(showBuyTokenWidget);
+
+                    $payCoinpayments.click();
+
+                    $('#agree-terms').click();
+
+                    $('.modal .pay-list').css('display', 'none');
+                    $('.modal .mgt-1-5x').css('display', 'none');
+                }
+            }, 50);
+        }
+
+
+        window.priceRequest = function(symbol) {
+
+            console.log(symbol);
+            console.log('called with ' + symbol);
+
+            var myData;
+
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: '/tokenPrice?symbol=' + symbol,
+                success: function(data) {
+                    myData = data;
+                }
+            });
+
+            console.log('end' + myData);
+
+            return myData;
+
+        };
+
+        var entryPoint = document.getElementById('buy-token-widget');
+
+        var wallets = [
+        {
+            name: "Metamask",
+            img: "/assets/img/metamask.png",
+            walletType: 0
+        },
+        {
+            name: "trust",
+            img: "/assets/img/trustwallet.png",
+            walletType: 0
+        },
+        {
+            name: "Sollet",
+            img: "/assets/img/sollet.png",
+            walletType: 1
+        },
+        {
+            name: "Binance Chain Wallet",
+            img: "/assets/img/binance.png",
+            walletType: 2
+        }
+        ]
+
+        var networkConfig = {
+            "networks": [{
+                    "name": "Ethereum",
+                    "chainId": 1,
+                    "addressToSendTokens": "0xEa6730dc546E65DFF0e02Ac2470B7572a031f11f",
+                    //"wallets": [wallets[0]]
+                    "wallets": []
+                },
+                {
+                    "name": "BSC",
+                    "chainId": 56,
+                    "addressToSendTokens": "0x4e553bd02cbc74d913d1d626f5768cf8b2d709f0",
+                    //"wallets": [wallets[0], wallets[3]]
+                    "wallets": [wallets[3]]
+                },
+                {
+                    "name": "Solana",
+                    "wallets": [wallets[2]],
+                    "clusterUrl": "mainnet-beta",
+                    "addressToSendTokens": "HzFjX3pT1zvJHHhCs1SVv5LqQXWnrgXkw7nzcF6rCXcn"
+                }
+            ]
+        }
+
+        var PRICE_UPDATE_INTERVAL_SECONDS = 30;
+        var BONUZ_TOKEN_TO_USD_RATIO = 0.025;
+        var INITIAL_USD_TOKENS_VALUE = 500;
+
+        var coinpaymentsConfig = {
+            tokens: ["btc, eth"],
+            callback: callback
+        }
+
+        var tokensConfig = [
+        {
+            "name": "BTC",
+            "isStable": false,
+            "isCurrency": true,
+            "decimals": 18,
+            "img": "assets/img/btc.png",
+            networks: [networkConfig.networks[3]]
+        },
+        // {
+        //     "name": "ETH",
+        //     "isStable": false,
+        //     "isCurrency": true,
+        //     "decimals": 18,
+        //     "img": "assets/img/eth.png",
+        //     networks: [networkConfig.networks[0]],
+        //     addresses: [
+        //     "0x3ba8363d9fd7C212F422D026b919cE98bd43A012"
+        //     ]
+        // },
+        {
+            "name": "USDT",
+            "isStable": true,
+            "isCurrency": false,
+            "decimals": 6,
+            "img": "assets/img/usdt.png",
+            networks: [
+                // networkConfig.networks[0],
+                networkConfig.networks[1]
+            ],
+            addresses: [
+                // "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                "0x55d398326f99059fF775485246999027B3197955"
+            ],
+            decimalsArray: [
+                // 6,
+                18
+            ]
+        },
+        {
+            "name": "USDC",
+            "isStable": true,
+            "isCurrency": false,
+            "decimals": 0,
+            "img": "assets/img/usdc.png",
+            networks: [
+                // networkConfig.networks[0],
+                networkConfig.networks[1]
+            ],
+            addresses: [
+                // "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+                "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+            ],
+            decimalsArray: [
+                // 6,
+                18
+            ]
+        },
+        {
+            "name": "BNB",
+            "isStable": false,
+            "isCurrency": true,
+            "decimals": 18,
+            "img": "assets/img/binance.png",
+            networks: [networkConfig.networks[1]],
+            addresses: [
+                "0x5B4f6F66285b23D8e1b360E35b133A1e2e5E8648"
+            ]
+        },
+        {
+            "name": "SOL",
+            "isStable": false,
+            "isCurrency": true,
+            "decimals": 9,
+            "img": "assets/img/sol.png",
+            networks: [networkConfig.networks[2]]
+        }
+        ];
+
+        var config = {
+            demoMode: false,
+
+            tokensConfig: tokensConfig,
+            networkConfig: networkConfig,
+            bonuzTokenToUSDRatio: BONUZ_TOKEN_TO_USD_RATIO,
+            initialUSDTokensValue: INITIAL_USD_TOKENS_VALUE,
+            priceUpdateIntervalSeconds: PRICE_UPDATE_INTERVAL_SECONDS,
+            userId: 0,
+            coinpaymentsConfig: coinpaymentsConfig,
+
+            apiCryptowatchKey: 'IT8TNSFFDUL830DYGI70',
+
+            // statsWalletUrl: '/stats-wallet',
+            statsWalletUrl: '/addWallet',
+            statsTransactionUrl: '/createTransaction',
+  
+            minInputUSD: 250,
+            maxInputUSD: 1500,
+
+            statsRequestIntervalSeconds: 1
+        };
+
+        //document.createBlockchainPaymentsWidget(entryPoint, config);
+    }
+
+    document.addEventListener("DOMContentLoaded", renderBuyTokenWidget);
+</script>
+@endpush
+
+@push('footer')
+<link rel="stylesheet" href="{{ asset('assets/js/buytokenwidget/css/bundle.min.css').css_js_ver() }}">
+<style type="text/css">
+    .select-bordered~.select2-container--flat.select2-container--open .select2-selection--single,
+    .select-bordered~.select2-container--flat.select2-container--open .select2-selection--multiple {
+        border-color: #43444b;
+    }
+
+    .select2-search--dropdown {
+        background: #8262a3;
+    }
+
+    .search-on .select2-search--dropdown {
+        border-bottom: 1px solid #202227;
+    }
+
+    .select2-search--dropdown .select2-search__field {
+        background: #383a41;
+        border: 1px solid #202227;
+    }
+
+    .select2-dropdown.search-on.select2-dropdown--below {
+        border-color: #414249;
+    }
+
+    .select2-search__field {
+        color: #ffffff;
+    }
+
+    .select2-container--flat .select2-results__option--highlighted[aria-selected],
+    .select2-results__option[aria-selected] {
+        background: #2a292f;
+        color: #ffffff;
+        border: black;
+    }
+
+    .select2-container--flat .select2-results__option[aria-selected=true] {
+        background: rgb(59 61 68);
+        color: #18aed2;
+    }
+
+    /* .row.guttar-15px > div {
+display: none;
+} */
+
+    /* .token-currency-choose.payment-list {
+display: none;
+} */
+
+    .pay-option-label {
+        background: #202227;
+    }
+
+    .input-hint {
+        background: transparent;
+    }
+
+    .token-pay-currency {
+        border-left: 1px solid #758698;
+    }
+
+    .modal-content {
+        border: 1px solid #2e3039;
+        background-color: #212529;
+    }
+
+    .popup-title {
+        color: #ffffff;
+    }
+</style>
 @endpush

@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'verify_user' => \App\Http\Middleware\EmailVerifyMiddleware::class,
         'demo_user' => \App\Http\Middleware\CheckDemoUser::class,
         'g2fa' => \App\Http\Middleware\G2faMiddleware::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**

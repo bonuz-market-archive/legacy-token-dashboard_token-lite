@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exceptions\APIException;
+use App\Models\KYC;
+use App\Models\User;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
+use App\Models\IcoStage;
+use App\PayModule\Module;
+use App\Models\Transaction;
+use App\Notifications\TnxStatus;
 
 class APIController extends Controller
 {
@@ -170,5 +179,162 @@ class APIController extends Controller
         ];
         
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    // {
+    //     "guid": "5ffffc46baaaaf001236b209",
+    //     "status": "approved",
+    //     "clientId": "client_id",
+    //     "event": "review.approved",
+    //     "recordId": "5ffffb44baaaaf001236b1d1",
+    //     "refId": "rdm-1610611387861",
+    //     "submitCount": 1,
+    //     "blockPassID": "5ffffaeaaaaaaaa0182f387c",
+    //     "isArchived": false,
+    //     "inreviewDate": "2021-01-14T08:09:39.320Z",
+    //     "waitingDate": "2021-01-14T08:09:16.803Z",
+    //     "approvedDate": "2021-01-14T08:09:42.508Z",
+    //     "isPing": false,
+    //     "env": "prod",
+    //     "webhookId": null
+    // }
+
+    public function kyc(Request $request)
+    {        
+
+        $recordId = $request->input('recordId');
+
+        // Get record id
+        if ($recordId == NULL) {
+            throw new \Exception(print_r($request->all(), true));
+        }
+        
+        $clientId = 'bonuz_public_kyc_67c49';
+        $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
+
+        $getUrl = "https://kyc.blockpass.org/kyc/1.0/connect/$clientId/recordId/$recordId";
+
+        // Call blockpass API
+        // $response = \Illuminate\Support\Facades\Http::withHeaders([
+        //     'Authorization' => $blockpassApiKey,
+        //     'cache-control' => 'no-cache'
+        // ])->get($getUrl);
+
+        $client = new \GuzzleHttp\Client();
+        $response = json_decode($client->request('GET', $getUrl, [
+            'headers' => [
+                'Authorization' => $blockpassApiKey,
+                'cache-control' => 'no-cache'
+            ]
+        ])->getBody());
+
+        // Get email of approved user
+        $identity = $response->data->identities;
+        $givenName = $identity->given_name->value;
+        $familyName = $identity->family_name->value;
+        $name = "$givenName $familyName";
+        
+        
+        $user = User::where('name', $name)->first();
+        if ($user == NULL) {
+            
+            $email = $response->data->identities->email->value;
+            
+            // Get user by email
+            $user = User::where('email', $email)->first();
+        }
+        
+        
+        // Get user by name
+        // $user = User::whereLike('name', '%' . $name . '%')->first();
+
+                // throw new \Exception($name);
+
+        $dt = new \DateTime();
+        $formattedDateTime = $dt->format('Y-m-d H:i:s');
+
+        // Get user by email
+        $kyc = KYC::where('email', $user->email)->first();
+        if ($kyc == null) {
+            $kyc = new KYC;
+        }
+
+        $kyc->userId = $user->id;
+        $kyc->email = $user->email;
+        $kyc->firstName = $givenName;
+        $kyc->lastName = $familyName;
+        $kyc->record_id = $recordId;
+        $kyc->status = 'approved';
+        $kyc->reviewedBy = 1;
+        $kyc->reviewedAt = $formattedDateTime;
+
+        $kyc->save();
+
+    }
+
+    // public function createTransaction(Request $request)
+    // {
+    //     $action = $request->input('action');
+    //     if ($action != 'create') {
+    //         echo 'wrong action given';
+    //     }
+    //         $wallet = $request->input('wallet');
+    //         $network = $request->input('network');
+    //         $token = $request->input('token');
+    //         $bonuzAmount = $request->input('bonuzAmount');
+    //         $tokenAmount = $request->input('tokenAmount');
+    //         $wallet = $request->input('wallet');
+    //         $clientTimestamp = $request->input();
+    //         $serverTimestamp = date('Y-m-d H:i:s');
+
+    //         echo print_r($wallet, true)
+    //         . print_r($network, true)
+    //         . print_r($token, true)
+    //         . print_r($bonuzAmount, true)
+    //         . print_r($tokenAmount, true)
+    //         . print_r($clientTimestamp, true)
+    //         . print_r($serverTimestamp, true);
+    // }
+
+    // public function updateTransaction(Request $request)
+    // {
+    //     $wallet = $request->input('wallet');
+    //     $amount = $request->input('amount');
+
+    //     echo print_r($wallet, true)
+    //     . print_r($amount, true);
+    // }
+    
+    public function backup(Request $request)
+    {
+        $dbhost = "127.0.0.1";
+        // DB_PORT=3306
+        $dbname = "bonuzzzc_enterbonuzmarket";
+        $dbuser = "bonuzzzc_enterbonuzmarket";
+        $dbpassword = "nbzu/%&&(Z)U\"IUBG(Z/§)$";
+
+        include_once(dirname(__FILE__) . '/Mysqldump.php');
+        $dump = new \Ifsnop\Mysqldump\Mysqldump('mysql:host=localhost;dbname=' . $dbname, $dbuser, $dbpassword);
+        $dump->start('php://output');
+
+
+
+
+
+
+
+        return;
+
+
+        // $lastTime = $request['lastTime'];
+
+         
+        $dumpfile = $dbname . "_" . date("Y-m-d_H-i-s") . ".sql";
+         
+        echo "Start dump\n";
+        $code = exec("mysqldump --user=$dbuser --password=$dbpassword --host=$dbhost $dbname > $dumpfile");
+        echo "-- Dump completed -- ";
+        echo $code;
+        echo $dumpfile;
     }
 }

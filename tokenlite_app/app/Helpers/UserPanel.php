@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UserPanel Helper 
  *
@@ -8,6 +9,7 @@
  * @author Softnio
  * @version 1.1.6
  */
+
 namespace App\Helpers;
 
 use DB;
@@ -27,7 +29,7 @@ class UserPanel
      */
     public static function user_info($data = null, $atttr = '')
     {
-        $user = (empty($data)) ? auth()->user() : $data; 
+        $user = (empty($data)) ? auth()->user() : $data;
         $atttr_def = array('id' => '', 'class' => '', 'vers' => '');
         $opt_atttr = parse_args($atttr, $atttr_def);
         extract($opt_atttr);
@@ -56,7 +58,7 @@ class UserPanel
      */
     public static function user_balance($data = null, $atttr = '')
     {
-        $user = (empty($data)) ? auth()->user() : $data; 
+        $user = (empty($data)) ? auth()->user() : $data;
         $atttr_def = array('id' => '', 'class' => '', 'vers' => '');
         $opt_atttr = parse_args($atttr, $atttr_def);
         extract($opt_atttr);
@@ -64,7 +66,7 @@ class UserPanel
         $g_cls = ($class) ? css_class($class) : '';
 
         $return = '<div' . $g_id . ' class="user-status' . $g_cls . '">
-        <h6 class="text-white">'.$user->email.' <small class="text-white-50">('.set_id($user->id).')</small></h6>
+        <h6 class="text-white">' . $user->email . ' <small class="text-white-50">(' . set_id($user->id) . ')</small></h6>
         <h6 class="user-status-title">' . __('Token Balance') . '</h6>
         <div class="user-status-balance">' . to_num_token($user->tokenBalance) . ' <small>' . token('symbol') . '</small></div>
         </div>';
@@ -97,15 +99,15 @@ class UserPanel
         $base_out = '<li class="token-balance-sub"><span class="lead">' . ($base_con > 0 ? $base_con : '~') . '</span><span class="sub">' . strtoupper($base_cur) . '</span></li>';
 
         $cur1_out = $cur2_out = '';
-        if(gws('user_in_cur1', 'eth')!='hide') {
+        if (gws('user_in_cur1', 'eth') != 'hide') {
             $cur1 = gws('user_in_cur1', 'eth');
-            $cur1_con = (gws('pmc_active_'.$cur1) == 1) ? to_num($data->$cur1, 'auto') : 0;
+            $cur1_con = (gws('pmc_active_' . $cur1) == 1) ? to_num($data->$cur1, 'auto') : 0;
             $cur1_out = ($cur1 != $base_cur) ? '<li class="token-balance-sub"><span class="lead">' . ($cur1_con > 0 ? $cur1_con : '~') . '</span><span class="sub">' . strtoupper($cur1) . '</span></li>' : '';
         }
 
-        if(gws('user_in_cur2', 'btc')!='hide') {
+        if (gws('user_in_cur2', 'btc') != 'hide') {
             $cur2 = gws('user_in_cur2', 'btc');
-            $cur2_con = (gws('pmc_active_'.$cur2) == 1) ? to_num($data->$cur2, 'auto') : 0;
+            $cur2_con = (gws('pmc_active_' . $cur2) == 1) ? to_num($data->$cur2, 'auto') : 0;
             $cur2_out = ($cur2 != $base_cur) ? '<li class="token-balance-sub"><span class="lead">' . ($cur2_con > 0 ? $cur2_con : '~') . '</span><span class="sub">' . strtoupper($cur2) . '</span></li>' : '';
         }
 
@@ -114,7 +116,7 @@ class UserPanel
         $return = '<div' . $g_id . ' class="token-statistics card card-token' . $g_cls . '">
         <div class="card-innr"><div class="token-balance' . $ver_cls . '">' . $ver_icon . '
         <div class="token-balance-text"><h6 class="card-sub-title">' . __('Token Balance') . '</h6>
-        <span class="lead">' . to_num_token($user->tokenBalance) . ' <span>' . token('symbol') . ' <em class="fas fa-info-circle fs-11" data-toggle="tooltip" data-placement="right" title="'.__('Equivalent to'). ' ' .token_price($user->tokenBalance, base_currency()).' '.base_currency(true).'"></em></span></span>
+        <span class="lead">' . to_num_token($user->tokenBalance) . ' <span>' . token('symbol') . ' <em class="fas fa-info-circle fs-11" data-toggle="tooltip" data-placement="right" title="' . __('Equivalent to') . ' ' . token_price($user->tokenBalance, base_currency()) . ' ' . base_currency(true) . '"></em></span></span>
         </div>
         </div>' . $contribute . '</div></div>';
 
@@ -128,8 +130,10 @@ class UserPanel
      * @since 1.0
      * @return void
      */
-    public static function user_token_block($data = '', $atttr = '')
+    public static function user_token_block($data = '', $atttr = '', $notReady = true)
     {
+        return "";
+
         $atttr_def = array('id' => '', 'class' => '', 'vers' => '');
         $opt_atttr = parse_args($atttr, $atttr_def);
         extract($opt_atttr);
@@ -159,14 +163,22 @@ class UserPanel
         $card2 .= '</div>
         </div>';
 
-        $return = ''; 
+        $return = '';
         $status = ucfirst(active_stage_status());
-        if ($vers =='buy') {
+        if ($vers == 'buy') {
             $return .= '<div class="card card-full-height"><div class="card-innr">';
-            $return .= '<h6 class="card-title card-title-sm">'. active_stage()->name .'<span class="badge badge-success ucap">' . __($status) . '</span></h6>';
-            $return .= '<h3 class="text-dark">1 ' . $_SYM . ' = ' . to_num($token_1price, 'max', ',', true) . ' ' . $_CUR .' <span class="d-block text-exlight ucap fs-12">1 '. $_CUR . ' = ' . to_num($token_1rate, 'max', ',', true) . ' ' . $token_ratec .'</span></h3>';
-            $return .= '<div class="gaps-0-5x"></div><div class="d-flex align-items-center justify-content-between mb-0"><a href="'.route('user.token').'" class="btn btn-md btn-primary">'.__('Buy Token Now').'</a></div>';
-                
+            $return .= '<h6 class="card-title card-title-sm">' . active_stage()->name . '<span class="badge badge-success ucap">' . __($status) . '</span></h6>';
+            $return .= '<h3 class="text-dark">1 ' . $_SYM . ' = ' . to_num($token_1price, 'max', ',', true) . ' ' . $_CUR . ' <span class="d-block text-exlight ucap fs-12">1 ' . $_CUR . ' = ' . to_num($token_1rate, 'max', ',', true) . ' ' . $token_ratec . '</span></h3>';
+
+            $return .= '<div class="gaps-0-5x"></div><div class="d-flex align-items-center justify-content-between mb-0">';
+            if ($notReady == true) {
+                //$return .= 'Token Sale soon!';
+            } else {
+                $return .= '<a href="' . route('user.token') . '" class="btn btn-md btn-primary">' . __('Buy Token Now') . '</a>';
+            }
+            $return .= '</div>';
+            // $return .= '<div class="gaps-0-5x"></div><div class="d-flex align-items-center justify-content-between mb-0"><a href="'.route('user.token').'" class="btn btn-md btn-primary">'.__('Buy Token Now').'</a></div>';
+
             $return .= '</div></div>';
         } else {
             $return .= '<div' . $g_id . ' class="token-information card card-full-height' . $g_cls . '">';
@@ -222,7 +234,7 @@ class UserPanel
         } else {
             $email_status = '<li><a href="javascript:void(0)" class="btn btn-xs btn-auto btn-success">' . __('Email Verified') . '</a></li>';
         }
-        if(!is_kyc_hide()) {
+        if (!is_kyc_hide()) {
             if (isset($user->kyc_info->status) && $user->kyc_info->status == 'approved') {
                 $kyc_staus = '<li><a href="javascript:void(0)" class="btn btn-xs btn-auto btn-success">' . __('KYC Approved') . '</a></li>';
             } elseif (isset($user->kyc_info->status) && $user->kyc_info->status == 'pending') {
@@ -258,7 +270,7 @@ class UserPanel
         $uwallet .= '<div class="d-flex justify-content-between">';
         if ($user->walletAddress) {
             $uwallet .= '<span>' . show_str($user->walletAddress, 8) . ' ';
-            if ($user->wallet()=='pending') {
+            if ($user->wallet() == 'pending') {
                 $uwallet .= ' <em title="' . __('New address under review for approve.') . '" data-toggle="tooltip" class="fas fa-info-circle text-warning"></em></span>';
             }
         } else {
@@ -291,7 +303,8 @@ class UserPanel
         $heading = '<h6 class="card-title' . $title_cls . '">' . __('Identity Verification - KYC') . '</h6>';
         $ukyc = $heading . '<p>' . __('To comply with regulation, participant will have to go through identity verification.') . '</p>';
         if (!isset($user->kyc_info->status)) {
-            $ukyc .= '<p class="lead text-light pdb-0-5x">' . __('You have not submitted your documents to verify your identity (KYC).') . '</p><a href="' . route('user.kyc.application') . '" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Click to Proceed') . '</a>';
+            $ukyc .= '<p class="lead text-light pdb-0-5x">' . __('You have not submitted your documents to verify your identity (KYC).') . '</p><a href="' . route('user.kyc') . '" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Click to Proceed') . '</a>';
+            //$ukyc .= '<p class="lead text-light pdb-0-5x">' . __('You have not submitted your documents to verify your identity (KYC).') . '</p><a href="' . route('user.kyc.application') . '" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Click to Proceed') . '</a>';
         }
         if (isset($user->kyc_info->status) && $user->kyc_info->status == 'pending') {
             $ukyc .= '<p class="lead text-info pdb-0-5x">' . __('We have received your document.') . '</p><p class="small">' . __('We will review your information and if all is in order will approve your identity. You will be notified by email once we verified your identity (KYC).') . '</p>';
@@ -300,7 +313,8 @@ class UserPanel
             $ukyc .= '<p class="lead text-danger pdb-0-5x">' . __('KYC Application has been rejected!') . '</p><p>' . __('We were having difficulties verifying your identity. In our verification process, we found information are incorrect or missing. Please re-submit the application again and verify your identity.') . '</p><a href="' . route('user.kyc.application') . '?state=resubmit" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Resubmit') . '</a><a href="' . route('user.kyc.application.view') . '" class="btn btn-sm m-2 btn-icon btn-secondary">' . __('View KYC') . '</a>';
         }
         if (isset($user->kyc_info->status) && $user->kyc_info->status == 'approved') {
-            $ukyc .= '<p class="lead text-success pdb-0-5x"><strong>' . __('Identity (KYC) has been verified.') . '</strong></p><p>' . __('One for our team verified your identity. You are eligible to participate in our token sale.') . '</p><a href="' . route('user.token') . '" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Purchase Token') . '</a><a href="' . route('user.kyc.application.view') . '" class="btn btn-sm m-2 btn-icon btn-success">' . __('View KYC') . '</a>';
+            $ukyc .= '<p class="lead text-success pdb-0-5x"><strong>' . __('Identity (KYC) has been verified.') . '</strong></p><p>' . __('One for our team verified your identity. You are eligible to participate in our token sale.') . '<a href="' . route('user.kyc.application.view') . '" class="btn btn-sm m-2 btn-icon btn-success">' . __('View KYC') . '</a>';
+            //$ukyc .= '<p class="lead text-success pdb-0-5x"><strong>' . __('Identity (KYC) has been verified.') . '</strong></p><p>' . __('One for our team verified your identity. You are eligible to participate in our token sale.') . '</p><a href="' . route('user.token') . '" class="btn btn-sm m-2 btn-icon btn-primary">' . __('Purchase Token') . '</a><a href="' . route('user.kyc.application.view') . '" class="btn btn-sm m-2 btn-icon btn-success">' . __('View KYC') . '</a>';
         }
         if (token('before_kyc') == '1') {
             $ukyc .= '<h6 class="kyc-alert text-danger">* ' . __('KYC verification required for purchase token') . '</h6>';
@@ -352,7 +366,7 @@ class UserPanel
         $referral_link = (get_page('referral', 'status') == 'active' && is_active_referral_system()) ? '<li><a href="' . route('user.referral') . '"><i class="ti ti-infinite"></i>' . get_page('referral', 'menu_title') . '</a></li>' : '';
         // v1.1.2
         $withdraw_link = (nio_module()->has('Withdraw') && has_route('withdraw:user.index')) ? '<li><a href="' . route('withdraw:user.index') . '"><i class="ti ti-wallet"></i>' . __('Withdraw') . '</a></li>' : '';
-        $return = '<ul' . $g_id . ' class="user-links' . $g_cls . '"><li><a href="' . route('user.account') . '"><i class="ti ti-id-badge"></i>' . __('My Profile') . '</a></li>'.$withdraw_link.$referral_link;
+        $return = '<ul' . $g_id . ' class="user-links' . $g_cls . '"><li><a href="' . route('user.account') . '"><i class="ti ti-id-badge"></i>' . __('My Profile') . '</a></li>' . $withdraw_link . $referral_link;
         $return .= '<li><a href="' . route('user.account.activity') . '"><i class="ti ti-eye"></i>' . __('Activity') . '</a></li>';
         $return .= '</ul>';
 
@@ -377,7 +391,7 @@ class UserPanel
         $email = (get_setting('site_support_email', get_setting('site_email'))) ? ' <a href="mailto:' . get_setting('site_support_email', get_setting('site_email')) . '">' . get_setting('site_support_email', get_setting('site_email')) . '</a>' : '';
         $gaps = '<div class="gaps-3x d-none d-sm-block"></div>';
 
-        $return = ($email) ? '<p class="text-light text-center">' . ( __('Contact our support team via email') ) . ' - '.$email.'</p><div class="gaps-1x"></div>' . $gaps : '';
+        $return = ($email) ? '<p class="text-light text-center">' . (__('Contact our support team via email')) . ' - ' . $email . '</p><div class="gaps-1x"></div>' . $gaps : '';
 
         return $return;
     }
@@ -394,10 +408,10 @@ class UserPanel
     {
         $l = str_replace('_', '-', current_lang());
 
-        $text = '<div class="lang-switch relative"><a href="javascript:void(0)" class="lang-switch-btn toggle-tigger">'.strtoupper($l).'<em class="ti ti-angle-up"></em></a>';
+        $text = '<div class="lang-switch relative"><a href="javascript:void(0)" class="lang-switch-btn toggle-tigger">' . strtoupper($l) . '<em class="ti ti-angle-up"></em></a>';
         $text .= '<div class="toggle-class dropdown-content dropdown-content-up"><ul class="lang-list">';
         foreach (config('icoapp.supported_languages') as $lng) {
-            $text .= '<li><a href="'.route('language').'?lang='.$lng.'">'.get_lang($lng).'</a></li>';
+            $text .= '<li><a href="' . route('language') . '?lang=' . $lng . '">' . get_lang($lng) . '</a></li>';
         }
         $text .= '</ul></div></div>';
         return (is_lang_switch()) ? $text : '';
@@ -432,7 +446,7 @@ class UserPanel
         $social_exist = ($fb || $tw || $in || $gh || $yt || $md || $tg) ? true : false;
         $return = ($social_exist) ? '<ul' . $g_id . ' class="socials' . $g_cls . '">' . $fb . $tw . $in . $gh .  $yt . $md . $tg . '</ul>' : '';
 
-        return ($data=='exists') ? $social_exist : $return;
+        return ($data == 'exists') ? $social_exist : $return;
     }
 
     /**
@@ -459,11 +473,11 @@ class UserPanel
         $privacy = (get_page('privacy', 'status') == 'active') ? '<li><a href="' . route('public.pages', get_slug('privacy')) . '">' . get_page('privacy', 'menu_title') . '</a></li>' : '';
         $terms = (get_page('terms', 'status') == 'active') ? '<li><a href="' . route('public.pages', get_slug('terms')) . '">' . get_page('terms', 'menu_title') . '</a></li>' : '';
 
-        $is_copyright = ( (isset($data['copyright']) && $data['copyright']==true) || $vers == 'copyright' ) ? true : false;
-        $copyrights = ($is_copyright) ? '<li>'.site_copyrights().'</li>' : '';
+        $is_copyright = ((isset($data['copyright']) && $data['copyright'] == true) || $vers == 'copyright') ? true : false;
+        $copyrights = ($is_copyright) ? '<li>' . site_copyrights() . '</li>' : '';
 
-        $is_lang = ( (isset($data['lang']) && $data['lang']==true) && is_lang_switch() ) ? true : false;
-        $lang = ($is_lang) ? '<li>'.Userpanel::language_switcher().'</li>' : '';
+        $is_lang = ((isset($data['lang']) && $data['lang'] == true) && is_lang_switch()) ? true : false;
+        $lang = ($is_lang) ? '<li>' . Userpanel::language_switcher() . '</li>' : '';
 
         $return = ($privacy || $terms) ? '<ul' . $g_id . ' class="footer-links' . $g_cls . '">' . $cs_page . $how_to . $faqs . $privacy . $terms . $copyrights . $lang . '</ul>' : '';
 
@@ -485,7 +499,7 @@ class UserPanel
         $g_id = ($id) ? ' id="' . $id . '"' : '';
         $g_cls = ($class) ? css_class($class) : '';
 
-        $copyrights = ($data=='div') ? '<div' . $g_id . ' class="copyright-text' . $g_cls . '">'.site_copyrights().'</div>' : site_copyrights();
+        $copyrights = ($data == 'div') ? '<div' . $g_id . ' class="copyright-text' . $g_cls . '">' . site_copyrights() . '</div>' : site_copyrights();
 
         $return = $copyrights;
 
@@ -508,13 +522,15 @@ class UserPanel
         $g_cls = ($class) ? css_class($class) : '';
 
         $return = '';
-        $img_url = (isset($image) && $image !='') ? asset('images/'.$image) : '';
+        $img_url = (isset($image) && $image != '') ? asset('images/' . $image) : '';
         if ($data == 'welcome') {
+            $return .= '<style type="text/css">.content-welcome-block > .card-innr { background: #000; }</style>';
             $return .= '<div' . $g_id . ' class="card content-welcome-block' . $g_cls . '"><div class="card-innr">';
             $return .= ($img_url) ? '<div class="row guttar-vr-20px">' : '';
 
             if ($img_url) {
-            $return .= '<div class="col-sm-5 col-md-4"><div class="card-image card-image-sm"><img width="240" src="'.$img_url.'" alt=""></div></div><div class="col-sm-7 col-md-8">';
+                $return .= '<div class="col-sm-12 col-md-12">';
+                //$return .= '<div class="col-sm-5 col-md-4"><div class="card-image card-image-sm"><img width="240" src="'.$img_url.'" alt=""></div></div><div class="col-sm-7 col-md-8">';
             }
             $return .= '<div class="card-content">';
             $return .= '<h4>' . get_page('home_top', 'title') . '</h4>';
@@ -575,11 +591,11 @@ class UserPanel
         }
 
         // If expaired or Completed
-        if(is_expired() || is_completed()) {
-            $sales_state = '<div class="gaps-2x"></div><h4 class="text-light text-center">'.__('Our token sales has been finished. Thank you very much for your contribution.').'</h4>';
+        if (is_expired() || is_completed()) {
+            $sales_state = '<div class="gaps-2x"></div><h4 class="text-light text-center">' . __('Our token sales has been finished. Thank you very much for your contribution.') . '</h4>';
         }
 
-        $return = '<div' . $g_id . ' class="card card-sales-progress' . $g_cls . '"><div class="card-innr">'.$title.$progress.$progress_bar.$sales_state.'</div></div>';
+        $return = '<div' . $g_id . ' class="card card-sales-progress' . $g_cls . '"><div class="card-innr">' . $title . $progress . $progress_bar . $sales_state . '</div></div>';
 
         return $return;
     }

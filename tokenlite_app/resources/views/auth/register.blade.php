@@ -40,7 +40,12 @@ $check_users = \App\Models\User::count();
             <input type="text" class="input-bordered" value="{{ __('Your were invited by :userid', ['userid' => get_refer_id(true)]) }}" disabled readonly>
         </div>
         @endif
-        
+
+        <div class="input-item text-left">
+            <input name="newsletter" class="input-checkbox input-checkbox-md" id="newsletter" type="checkbox">
+            <label for="newsletter">{!! __('I agree to the') . ' newsletter.' !!}</label>
+        </div>
+
         @if(( application_installed(true)) && ($check_users > 0))
             @if(get_page_link('terms') || get_page_link('policy'))
             <div class="input-item text-left">

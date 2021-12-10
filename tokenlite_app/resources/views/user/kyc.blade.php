@@ -31,8 +31,30 @@ $kyc_desc = ($user_kyc !== NULL && isset($_GET['thank_you'])) ? __('Verify your 
                             </div>
                             <span class="status-text text-dark">{{__('You have not submitted your necessary documents to verify your identity.')}}{{ (token('before_kyc')=='1') ? __('In order to purchase our tokens, please verify your identity.') : ''}}</span>
                             <p class="px-md-5">{{__('It would great if you please submit the form. If you have any question, please feel free to contact our support team.')}}</p>
-                            <a href="{{ route('user.kyc.application') }}?state=new" class="btn btn-primary">{{__('Click here to complete your KYC')}}</a>
+                            <!-- <a href="{{ route('user.kyc.application') }}?state=new" class="btn btn-primary">{{__('Click here to complete your KYC')}}</a> -->
+                            <!-- <a href="https://verify-with.blockpass.org/?clientId=bonuz_public_kyc_67c49&serviceName=Bonuz%3A%20Public%20KYC&env=prod" class="btn btn-primary">{{__('Click here to complete your KYC')}}</a> -->
                         </div> 
+
+                        <div class="form-step form-step-final">
+                            <div class="form-step-fields card-innr">
+                                <div class="input-item">
+                                    <input class="input-checkbox input-checkbox-md" id="term-condition" name="condition" type="checkbox" required="required" data-msg-required="{{ __("You should read our terms and policy.") }}">
+                                    <label for="term-condition">{{__('I have read the')}} {!! get_page_link('terms', ['target'=>'_blank']) !!} {{ (get_page_link('terms') && get_page_link('policy') ? __('and') : '') }} {!! get_page_link('policy', ['target'=>'_blank']) !!}.</label>
+                                </div>
+                                <div class="input-item">
+                                    <input class="input-checkbox input-checkbox-md" id="info-currect" name="currect" type="checkbox" required="required" data-msg-required="{{ __("Confirm that all information is correct.") }}">
+                                    <label for="info-currect">{{__('All the personal information I have entered is correct.')}}</label>
+                                </div>
+                                <div class="input-item">
+                                    <input class="input-checkbox input-checkbox-md" id="certification" name="certification" type="checkbox" required="required" data-msg-required="{{ __("Certify that you are individual.") }}">
+                                    <label for="certification">{{__("I certify that, I am registering to participate in the token distribution event(s) in the capacity of an individual (and beneficial owner) and not as an agent or representative of a third party corporate entity.")}}</label>
+                                </div>
+                                <div class="gaps-1x"></div>
+                                <!-- <button class="btn btn-primary" type="submit">{{__('Proceed to Verify')}}</button> -->
+                                <a id="kyc-toggle-me" href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">{{__('Click here to complete your KYC')}}</a>
+                            </div>{{-- .step-fields --}}
+                        </div>
+
                         @endif
                         {{-- IF SUBMITED @Thanks --}}
                         @if($user_kyc !== NULL && isset($_GET['thank_you']))
@@ -92,3 +114,37 @@ $kyc_desc = ($user_kyc !== NULL && isset($_GET['thank_you'])) ? __('Verify your 
     </div>
 </div>
 @endsection
+
+
+@push('footer')
+<script type="text/javascript">
+
+(function() {
+
+    var kycLink = 'https://verify-with.blockpass.org/?clientId=bonuz_public_kyc_67c49&serviceName=Bonuz%3A%20Public%20KYC&env=prod';
+
+    var termsAndConditionsCheckBox = document.getElementById('term-condition');
+    var $termsAndConditionsCheckBox = $(termsAndConditionsCheckBox);
+
+    var infoCurrect = document.getElementById('info-currect');
+    var $infoCurrect = $(infoCurrect);
+
+    var certification = document.getElementById('certification');
+    var $certification = $(certification);
+    
+    function changeBtnVisibility() {
+        var allCheckboxesChecked = termsAndConditionsCheckBox.checked
+            && infoCurrect.checked
+            && certification.checked;
+
+        var newKycLink = allCheckboxesChecked ? kycLink : "#";
+        $('#kyc-toggle-me').attr('href', newKycLink);
+    }
+
+    $termsAndConditionsCheckBox.change(changeBtnVisibility);
+    $infoCurrect.change(changeBtnVisibility);
+    $certification.change(changeBtnVisibility);
+})();
+
+</script>
+@endpush

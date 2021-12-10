@@ -122,6 +122,8 @@ class KycController extends Controller
      */
     public function application()
     {
+        return redirect()->route('user.kyc');
+        
         if (isset(Auth::user()->kyc_info->status)) {
             if (Auth::user()->kyc_info->status == 'pending') {
                 return redirect()->route('user.kyc')->with(['info' => __('messages.kyc.wait')]);

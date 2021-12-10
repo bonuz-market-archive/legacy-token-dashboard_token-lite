@@ -68,6 +68,17 @@
                 <div class="navbar-innr">
                     <ul class="navbar-menu" id="main-nav">
                         <li><a href="{{ route('admin.home') }}"><em class="ikon ikon-dashboard"></em> Dashboard</a></li>
+
+
+{{--
+                        @if(gup('tranx')||gup('view_tranx'))
+                        <li{!! (is_page('payments') ? ' class="active"' : '') !!}>
+                            <a href="{{ route('admin.payments') }}"><em class="ikon ikon-wallet"></em>Payments</a>
+                        </li>
+                        @endif
+--}}
+                        
+
                         @if(gup('tranx')||gup('view_tranx'))
                         <li{!! ((is_page('transactions')||is_page('transactions.pending')||is_page('transactions.approved')||is_page('transactions.bonuses'))? ' class="active"' : '') !!}>
                             <a href="{{ route('admin.transactions', 'pending') }}"><em class="ikon ikon-transactions"></em> Transactions</a>

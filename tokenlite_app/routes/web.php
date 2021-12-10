@@ -16,6 +16,15 @@ if(application_installed()){
     });
 }
 
+Route::get('/kyc', function () {
+    return redirect('/user/kyc');
+});
+
+//Route::get('/tokenPrice', 'User\TokenController@tokenPrice')->name('tokenPrice')->middleware('cors');
+Route::get('/tokenPrice', 'User\TokenController@tokenPrice')->name('tokenPrice');
+Route::post('/addWallet', 'User\TokenController@addWallet')->name('addWallet');
+Route::post('/createTransaction', 'User\TokenController@createTransaction')->name('createTransaction');
+
 // Handle Main / Route
 Route::get('/', 'Auth\LoginController@checkLoginState')->name('home');
 Route::get('/locale', 'PublicController@set_lang')->name('language');
@@ -56,7 +65,10 @@ Route::prefix('user')->middleware(['auth', 'user', 'verify_user', 'g2fa'])->name
     Route::get('/', 'User\UserController@index')->name('home');
     Route::get('/account', 'User\UserController@account')->name('account');
     Route::get('/account/activity', 'User\UserController@account_activity')->name('account.activity');
-    Route::get('/contribute', 'User\TokenController@index')->name('token');
+    //Route::get('/contribute', 'User\TokenController@index')->name('token');
+    Route::get('/contribute', function() {
+        return redirect('/');
+    })->name('token');
     Route::get('/contribute/cancel/{gateway?}', 'User\TokenController@payment_cancel')->name('payment.cancel');
     Route::get('/transactions', 'User\TransactionController@index')->name('transactions');
     Route::get('/kyc', 'User\KycController@index')->name('kyc');
@@ -113,6 +125,8 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'g2fa', 'ico'])->name('admi
     Route::get('/export/{table?}/{format?}', 'ExportController@export')->middleware(['ico', 'demo_user', 'super_admin'])->name('export'); // v1.1.0
     Route::get('/languages', 'Admin\LanguageController@index')->middleware(['ico'])->name('lang.manage'); // v1.1.3
     Route::get('/languages/translate/{code}', 'Admin\LanguageController@translator')->middleware(['ico'])->name('lang.translate'); // v1.1.3
+
+    Route::get('/payments', 'Admin\PaymentController@index')->middleware('ico')->name('index');
 
     /* Admin Ajax Route */
     Route::name('ajax.')->prefix('ajax')->middleware(['ico'])->group(function () {

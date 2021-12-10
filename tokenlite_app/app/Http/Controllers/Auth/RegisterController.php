@@ -80,11 +80,24 @@ class RegisterController extends Controller
             $this->checkReCaptcha($request->recaptcha);
         }
         $have_user = User::where('role', 'admin')->count();
-        if( $have_user >= 1 && ! $this->handler->check_body() ){
-            return back()->withInput()->with([
-                'warning' => $this->handler->accessMessage()
-            ]);
-        }
+        $bla = $have_user >= 1 && ! $this->handler->check_body();
+        // if( $have_user >= 1 && ! $this->handler->check_body() ){
+
+        //     $blab["message"] = $this->handler->accessMessage();
+        //     $blab["bla"] = var_export($bla, true);
+        //     $blab["Checkbody"] = var_export($this->handler->check_body(), true);
+        //     $blab["have_user"] = var_export($have_user, true);
+
+        //     return back()->withInput()->with([
+        //         // 'warning' => $this->handler->accessMessage()
+        //         'warning' => var_export($blab, true)
+        //     ]);
+
+
+        //     return back()->withInput()->with([
+        //         'warning' => $this->handler->accessMessage() . "--- bla: " . print_r($bla) . "; Checkbody: " . print_r($this->handler->check_body()) . " --- " . "have_user: " . print_r($have_user). "!!!"
+        //     ]);
+        // }
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
@@ -169,6 +182,11 @@ class RegisterController extends Controller
             $meta->email_token = str_random(65);
             $cd = Carbon::now(); //->toDateTimeString();
             $meta->email_expire = $cd->copy()->addMinutes(75);
+
+            if (isset($data->newsletter)) {
+                $meta->newsletter = $data->newsletter;   
+            }
+            
             $meta->save();
 
             if ($user->email_verified_at == null) {
