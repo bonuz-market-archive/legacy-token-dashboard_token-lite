@@ -372,7 +372,7 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
             statsRequestIntervalSeconds: 1
         };
 
-        //document.createBlockchainPaymentsWidget(entryPoint, config);
+        document.createBlockchainPaymentsWidget(entryPoint, config);
     }
 
     document.addEventListener("DOMContentLoaded", renderBuyTokenWidget);
