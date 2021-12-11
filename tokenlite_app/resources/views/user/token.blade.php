@@ -356,7 +356,6 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
             initialUSDTokensValue: INITIAL_USD_TOKENS_VALUE,
             priceUpdateIntervalSeconds: PRICE_UPDATE_INTERVAL_SECONDS,
             userId: 0,
-            coinpaymentsConfig: coinpaymentsConfig,
 
             apiCryptowatchKey: 'IT8TNSFFDUL830DYGI70',
 
