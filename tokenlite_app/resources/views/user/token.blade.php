@@ -15,7 +15,7 @@ $content_class = 'col-lg-8';
 $current_date = time();
 $upcoming = is_upcoming();
 
-$_b = 0; 
+$_b = 0;
 $bc = base_currency();
 $default_method = token_method();
 $symbol = token_symbol();
@@ -345,141 +345,10 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
 
         var entryPoint = document.getElementById('buy-token-widget');
 
-        var wallets = [
-        {
-            name: "Metamask",
-            img: "/assets/img/metamask.png",
-            walletType: 0
-        },
-        {
-            name: "trust",
-            img: "/assets/img/trustwallet.png",
-            walletType: 0
-        },
-        {
-            name: "Sollet",
-            img: "/assets/img/sollet.png",
-            walletType: 1
-        },
-        {
-            name: "Binance Chain Wallet",
-            img: "/assets/img/binance.png",
-            walletType: 2
-        }
-        ]
-
-        var networkConfig = {
-            "networks": [{
-                    "name": "Ethereum",
-                    "chainId": 1,
-                    "addressToSendTokens": "0xEa6730dc546E65DFF0e02Ac2470B7572a031f11f",
-                    //"wallets": [wallets[0]]
-                    "wallets": []
-                },
-                {
-                    "name": "BSC",
-                    "chainId": 56,
-                    "addressToSendTokens": "0x4e553bd02cbc74d913d1d626f5768cf8b2d709f0",
-                    //"wallets": [wallets[0], wallets[3]]
-                    "wallets": [wallets[3]]
-                },
-                {
-                    "name": "Solana",
-                    "wallets": [wallets[2]],
-                    "clusterUrl": "mainnet-beta",
-                    "addressToSendTokens": "HzFjX3pT1zvJHHhCs1SVv5LqQXWnrgXkw7nzcF6rCXcn"
-                }
-            ]
-        }
-
         var PRICE_UPDATE_INTERVAL_SECONDS = 30;
         var BONUZ_TOKEN_TO_USD_RATIO = 0.025;
         var INITIAL_USD_TOKENS_VALUE = 500;
-
-        var coinpaymentsConfig = {
-            tokens: ["btc, eth"],
-            callback: callback
-        }
-
-        var tokensConfig = [
-        {
-            "name": "BTC",
-            "isStable": false,
-            "isCurrency": true,
-            "decimals": 18,
-            "img": "assets/img/btc.png",
-            networks: [networkConfig.networks[3]]
-        },
-        // {
-        //     "name": "ETH",
-        //     "isStable": false,
-        //     "isCurrency": true,
-        //     "decimals": 18,
-        //     "img": "assets/img/eth.png",
-        //     networks: [networkConfig.networks[0]],
-        //     addresses: [
-        //     "0x3ba8363d9fd7C212F422D026b919cE98bd43A012"
-        //     ]
-        // },
-        {
-            "name": "USDT",
-            "isStable": true,
-            "isCurrency": false,
-            "decimals": 6,
-            "img": "assets/img/usdt.png",
-            networks: [
-                // networkConfig.networks[0],
-                networkConfig.networks[1]
-            ],
-            addresses: [
-                // "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-                "0x55d398326f99059fF775485246999027B3197955"
-            ],
-            decimalsArray: [
-                // 6,
-                18
-            ]
-        },
-        {
-            "name": "USDC",
-            "isStable": true,
-            "isCurrency": false,
-            "decimals": 0,
-            "img": "assets/img/usdc.png",
-            networks: [
-                // networkConfig.networks[0],
-                networkConfig.networks[1]
-            ],
-            addresses: [
-                // "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-                "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
-            ],
-            decimalsArray: [
-                // 6,
-                18
-            ]
-        },
-        {
-            "name": "BNB",
-            "isStable": false,
-            "isCurrency": true,
-            "decimals": 18,
-            "img": "assets/img/binance.png",
-            networks: [networkConfig.networks[1]],
-            addresses: [
-                "0x5B4f6F66285b23D8e1b360E35b133A1e2e5E8648"
-            ]
-        },
-        {
-            "name": "SOL",
-            "isStable": false,
-            "isCurrency": true,
-            "decimals": 9,
-            "img": "assets/img/sol.png",
-            networks: [networkConfig.networks[2]]
-        }
-        ];
-
+        
         var config = {
             demoMode: false,
 
