@@ -65,10 +65,7 @@ Route::prefix('user')->middleware(['auth', 'user', 'verify_user', 'g2fa'])->name
     Route::get('/', 'User\UserController@index')->name('home');
     Route::get('/account', 'User\UserController@account')->name('account');
     Route::get('/account/activity', 'User\UserController@account_activity')->name('account.activity');
-    //Route::get('/contribute', 'User\TokenController@index')->name('token');
-    Route::get('/contribute', function() {
-        return redirect('/');
-    })->name('token');
+    Route::get('/contribute', 'User\TokenController@index')->name('token');
     Route::get('/contribute/cancel/{gateway?}', 'User\TokenController@payment_cancel')->name('payment.cancel');
     Route::get('/transactions', 'User\TransactionController@index')->name('transactions');
     Route::get('/kyc', 'User\KycController@index')->name('kyc');
