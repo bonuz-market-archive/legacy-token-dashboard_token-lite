@@ -352,7 +352,6 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
         var config = {
             demoMode: false,
 
-            networkConfig: networkConfig,
             bonuzTokenToUSDRatio: BONUZ_TOKEN_TO_USD_RATIO,
             initialUSDTokensValue: INITIAL_USD_TOKENS_VALUE,
             priceUpdateIntervalSeconds: PRICE_UPDATE_INTERVAL_SECONDS,
