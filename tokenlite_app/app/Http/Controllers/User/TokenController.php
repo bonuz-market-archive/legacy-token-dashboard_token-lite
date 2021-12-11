@@ -353,8 +353,6 @@ class TokenController extends Controller
     
     public function addWallet(Request $request)
     {
-        return;
-        
         $user = User::find(Auth::id());
         $userId = $user->id;
 
