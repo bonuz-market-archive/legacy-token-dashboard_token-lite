@@ -13805,3 +13805,7 @@ h4.card-title.card-title-lg {
 	background-color: #030b4d;
 	padding: 10px 0;
 }
+
+.table td .lead {
+	color: #ffffff;
+}
