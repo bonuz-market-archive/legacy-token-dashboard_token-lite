@@ -13754,8 +13754,6 @@ a:active {
 }
 
 .icon_list a img:hover {
-	width: 57px;
-	height: auto;
 	transform: scale(1.05);
 	background-image: url(https://bonuz.market/wp-content/themes/blankslate/p/footer-social-hover.svg);
 	background-repeat: no-repeat;
