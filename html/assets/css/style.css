@@ -13735,8 +13735,7 @@ a:active {
 	border: 1px solid #3f414a;
 }
 .user-status {
-	background: rgb(158, 54, 139);
-	background: linear-gradient(65deg, rgba(158, 54, 139, 1) 0%, rgba(0, 0, 0, 1) 100%);
+	background: linear-gradient(270.9deg, var(--gradient-color-1) -2.92%, var(--gradient-color-2) 99.95%);
 }
 .user-dropdown:after {
 	border-bottom-color: #000;
