@@ -13806,6 +13806,8 @@ h4.card-title.card-title-lg {
 	padding: 10px 0;
 }
 
-.table td .lead {
+.table td .lead,
+.tile-data-number,
+.btn-outline.btn-dark .btn-outline.btn-dark:hover {
 	color: #ffffff;
 }
