@@ -13800,3 +13800,8 @@ ul {
 h4.card-title.card-title-lg {
 	color: #ffffff;
 }
+
+.navbar {
+	background-color: #030b4d;
+	padding: 10px 0;
+}
