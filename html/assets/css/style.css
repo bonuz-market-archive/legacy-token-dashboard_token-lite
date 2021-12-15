@@ -13777,3 +13777,26 @@ a:active {
 	line-height: initial;
 	font-size: 1.3em;
 }
+
+.footer-links li a,
+.copyright-text {
+	color: #ffffff;
+}
+
+.card-innr {
+	background: #030b4d;
+}
+
+@media (min-width: 576px) {
+	.card-innr {
+		padding: 25px 50px;
+	}
+}
+
+ul {
+	font-weight: 400;
+}
+
+h4.card-title.card-title-lg {
+	color: #ffffff;
+}
