@@ -13823,3 +13823,7 @@ h4.card-title.card-title-lg {
 .content-welcome-block > .card-innr {
 	background: #030b4d !important;
 }
+
+.account-info.card {
+	display: none;
+}
