@@ -70,7 +70,10 @@ Route::prefix('user')->middleware(['auth', 'user', 'verify_user', 'g2fa'])->name
     Route::get('/transactions', 'User\TransactionController@index')->name('transactions');
     Route::get('/kyc', 'User\KycController@index')->name('kyc');
     Route::get('/kyc/application', 'User\KycController@application')->name('kyc.application');
-    Route::get('/kyc/application/view', 'User\KycController@view')->name('kyc.application.view');
+    // Route::get('/kyc/application/view', 'User\KycController@view')->name('kyc.application.view');
+    Route::get('/kyc/application/view', function () {
+        return redirect('/user/kyc');
+    });
     Route::get('/kyc-list/documents/{file}/{doc}', 'User\KycController@get_documents')->middleware('ico')->name('kycs.file');
     Route::get('/password/confirm/{token}', 'User\UserController@password_confirm')->name('password.confirm');
     // Referral v1.0.3 > v1.1.1
