@@ -13748,3 +13748,16 @@ a:active {
 		background: #000;
 	}
 }
+
+.icon_list img {
+	width: 40px;
+}
+
+.icon_list a img:hover {
+	width: 57px;
+	height: auto;
+	transform: scale(1.05);
+	background-image: url(https://bonuz.market/wp-content/themes/blankslate/p/footer-social-hover.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
