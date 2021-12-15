@@ -13812,6 +13812,7 @@ h4.card-title.card-title-lg {
 .lead.token-amount,
 .lead.amount-pay,
 .lead.amount-receive,
-.sub.sub-s2.pay-with {
+.sub.sub-s2.pay-with,
+.btn-outline.btn-dark {
 	color: #ffffff;
 }
