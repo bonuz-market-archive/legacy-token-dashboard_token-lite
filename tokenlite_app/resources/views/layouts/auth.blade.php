@@ -46,7 +46,7 @@ $header_logo = '<div class="page-ath-header"><a href="'.url('/').'" class="page-
             </div>
         </div>
         @if ($auth_layout=='default' || $auth_layout=='alter')
-        <div class="page-ath-gfx" style="background-image: url({{ asset('images/ath-gfx.png') }});">
+        <div class="page-ath-gfx">
             <div class="w-100 d-flex justify-content-center">
                 <div class="col-md-8 col-xl-5">
                     {{-- <img src="{{ asset('images/intro.png') }}" alt=""> --}}
