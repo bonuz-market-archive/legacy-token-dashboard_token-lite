@@ -426,6 +426,29 @@ class UserPanel
      */
     public static function social_links($data = null, $atttr = '')
     {
+        return '
+            <div class="icon_list">
+                <a href="https://t.me/BonuzMarket" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/telegram.svg">
+                </a>
+                <a href="https://twitter.com/BonuzMarket" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/twiter.svg">
+                </a>
+                <a href="https://bonuzmarket.medium.com/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/m.svg">
+                </a>
+                <a href="https://t.me/BonuzHQ" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/message.svg">
+                </a>
+                <a href="https://www.instagram.com/bonuzmarket" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/instaram.svg">
+                </a>
+                <a href="https://www.facebook.com/BonuzMarket" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/facebook.svg">
+                </a>
+            </div>
+        ';
+
         $atttr_def = array('id' => '', 'class' => '', 'vers' => '');
         $opt_atttr = parse_args($atttr, $atttr_def);
         extract($opt_atttr);
@@ -568,25 +591,25 @@ class UserPanel
         $sales_caps = (token('sales_cap')) ? token('sales_cap') : 'token';
         $title = $progress = $progress_bar = $sales_end_in = $sales_start_in = '';
 
-        $title .= '<div class="card-head"><h5 class="card-title card-title-sm">'. __('Token Sales Progress').'</h5></div>';
+        $title .= '<div class="card-head"><h5 class="card-title card-title-sm">' . __('Token Sales Progress') . '</h5></div>';
 
-        $progress .= '<ul class="progress-info"><li><span>'.__('Raised Amount').' <br></span>'.ico_stage_progress('raised', $sales_raised).'</li><li><span>'.__('Total Token').' <br></span>'.ico_stage_progress('total', $sales_total).'</li></ul>';
+        $progress .= '<ul class="progress-info"><li><span>' . __('Raised Amount') . ' <br></span>' . ico_stage_progress('raised', $sales_raised) . '</li><li><span>' . __('Total Token') . ' <br></span>' . ico_stage_progress('total', $sales_total) . '</li></ul>';
 
         $no_class = ((active_stage()->hard_cap < 10) && (active_stage()->soft_cap < 10)) ? ' no-had-soft' : '';
 
-        $progress_bar = '<div class="progress-bar'.$no_class.'">';
-            if(active_stage()->hard_cap >= 10) {
-            $progress_bar .= '<div class="progress-hcap" data-percent="'.ico_stage_progress('hard').'"><div>'.__('Hard Cap').' <span>'.ico_stage_progress('hardtoken', $sales_caps).'</span></div></div>';
-            }
-            if(active_stage()->soft_cap >= 10) {
-            $progress_bar .= '<div class="progress-scap" data-percent="'.ico_stage_progress('soft').'"><div>'.__('Soft Cap').' <span>'.ico_stage_progress('softtoken', $sales_caps).'</span></div></div>';
-            }
-        $progress_bar .= '<div class="progress-percent" data-percent = "'.sale_percent(active_stage()).'"></div></div>';
+        $progress_bar = '<div class="progress-bar' . $no_class . '">';
+        if (active_stage()->hard_cap >= 10) {
+            $progress_bar .= '<div class="progress-hcap" data-percent="' . ico_stage_progress('hard') . '"><div>' . __('Hard Cap') . ' <span>' . ico_stage_progress('hardtoken', $sales_caps) . '</span></div></div>';
+        }
+        if (active_stage()->soft_cap >= 10) {
+            $progress_bar .= '<div class="progress-scap" data-percent="' . ico_stage_progress('soft') . '"><div>' . __('Soft Cap') . ' <span>' . ico_stage_progress('softtoken', $sales_caps) . '</span></div></div>';
+        }
+        $progress_bar .= '<div class="progress-percent" data-percent = "' . sale_percent(active_stage()) . '"></div></div>';
 
         $sales_state = '';
         if (!hide_opt_count()) {
-            $sales_end_in .= '<span class="card-sub-title ucap mgb-0-5x">'.__('Sales End in').'</span><div class="countdown-clock" data-date="'._date(active_stage()->end_date, 'Y/m/d H:i:s').'"></div>';
-            $sales_start_in .= '<span class="card-sub-title ucap mgb-0-5x">'.__('Sales Start in').'</span><div class="countdown-clock" data-date="'._date(active_stage()->start_date, 'Y/m/d H:i:s').'"></div>';
+            $sales_end_in .= '<span class="card-sub-title ucap mgb-0-5x">' . __('Sales End in') . '</span><div class="countdown-clock" data-date="' . _date(active_stage()->end_date, 'Y/m/d H:i:s') . '"></div>';
+            $sales_start_in .= '<span class="card-sub-title ucap mgb-0-5x">' . __('Sales Start in') . '</span><div class="countdown-clock" data-date="' . _date(active_stage()->start_date, 'Y/m/d H:i:s') . '"></div>';
             $sales_state = (is_upcoming() ? $sales_start_in : $sales_end_in);
         }
 
@@ -601,27 +624,30 @@ class UserPanel
     }
 
     /**
-    * user_referral_info()
-    *
-    * @version 1.0.0
-    * @since 1.0.3
-    * @return void
-    */
-    public static function user_referral_info($data=null, $atttr='')
+     * user_referral_info()
+     *
+     * @version 1.0.0
+     * @since 1.0.3
+     * @return void
+     */
+    public static function user_referral_info($data = null, $atttr = '')
     {
-        $atttr_def = array( 'id'    => '', 'class' => '', 'vers' => '' );
-        $opt_atttr = parse_args( $atttr, $atttr_def ); extract($opt_atttr);
-        $g_id = ($id) ? ' id="'.$id.'"' : ''; $g_cls = ($class) ? css_class($class) : '';
+        $atttr_def = array('id'    => '', 'class' => '', 'vers' => '');
+        $opt_atttr = parse_args($atttr, $atttr_def);
+        extract($opt_atttr);
+        $g_id = ($id) ? ' id="' . $id . '"' : '';
+        $g_cls = ($class) ? css_class($class) : '';
 
-        $auth       = auth(); $refers = $heading = '';
-        $ref_url    = route('public.referral').'?ref='.set_id($auth->id());
+        $auth       = auth();
+        $refers = $heading = '';
+        $ref_url    = route('public.referral') . '?ref=' . set_id($auth->id());
         $ref_page   = route('user.referral', get_slug('referral'));
-        $more       = (isset($data['more']) && $data['more']=='hide') ? '' : '<div class="card-opt"><a href="'.$ref_page.'" class="link ucap">'.__('More').'<em class="fas fa-angle-right ml-1"></em></a></div>';
-        $heading    .= '<div class="card-head has-aside"><h6 class="card-title card-title-sm">'.__('Earn with Referral').'</h6>'.$more.'</div>';
-        $refers     .= '<p class="pdb-0-5x"><strong>'.__('Invite your friends & family.').'</strong></p>';
-        $refers     .= '<div class="copy-wrap mgb-0-5x"><span class="copy-feedback"></span><em class="copy-icon fas fa-link"></em><input type="text" class="copy-address" value="'.$ref_url.'" disabled /><button class="copy-trigger copy-clipboard" data-clipboard-text="'.$ref_url.'"><em class="ti ti-files"></em></button></div>';
+        $more       = (isset($data['more']) && $data['more'] == 'hide') ? '' : '<div class="card-opt"><a href="' . $ref_page . '" class="link ucap">' . __('More') . '<em class="fas fa-angle-right ml-1"></em></a></div>';
+        $heading    .= '<div class="card-head has-aside"><h6 class="card-title card-title-sm">' . __('Earn with Referral') . '</h6>' . $more . '</div>';
+        $refers     .= '<p class="pdb-0-5x"><strong>' . __('Invite your friends & family.') . '</strong></p>';
+        $refers     .= '<div class="copy-wrap mgb-0-5x"><span class="copy-feedback"></span><em class="copy-icon fas fa-link"></em><input type="text" class="copy-address" value="' . $ref_url . '" disabled /><button class="copy-trigger copy-clipboard" data-clipboard-text="' . $ref_url . '"><em class="ti ti-files"></em></button></div>';
 
-        $return = ($refers) ? '<div'.$g_id.' class="referral-info card'.$g_cls.'"><div class="card-innr">'.$heading.$refers.'</div></div>' : '';
-        return ( get_page('referral', 'status') == 'active' ? $return : '');
+        $return = ($refers) ? '<div' . $g_id . ' class="referral-info card' . $g_cls . '"><div class="card-innr">' . $heading . $refers . '</div></div>' : '';
+        return (get_page('referral', 'status') == 'active' ? $return : '');
     }
 }
