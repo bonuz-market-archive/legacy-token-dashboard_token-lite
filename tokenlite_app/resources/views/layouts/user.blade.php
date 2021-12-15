@@ -19,6 +19,13 @@
     @endif
 </head>
 
+<?php
+
+$email = print_r(Auth::user()->email, true);
+$isTestUser = $email == 'tokenlite@olimo.me';
+
+?>
+
 <body class="user-dashboard page-user theme-modern">
     <div class="topbar-wrap">
         <div class="topbar is-sticky">
@@ -60,8 +67,11 @@
                 <div class="navbar-innr">
                     <ul class="navbar-menu" id="main-nav">
                         <li><a href="{{ route('user.home') }}"><em class="ikon ikon-dashboard"></em> {{__('Dashboard')}}</a></li>
-                        {{-- <li><a href="{{ route('user.token') }}"><em class="ikon ikon-coins"></em> {{__('Buy Token')}}</a></li>
-                        --}}
+
+                        <?php if ($isTestUser) { ?>
+                            <li><a href="{{ route('user.token') }}"><em class="ikon ikon-coins"></em> {{__('Buy Token')}}</a></li>
+                        <?php } ?>
+
                         @if(get_page('distribution', 'status') == 'active')
                         <li><a href="{{ route('public.pages', 'distribution') }}"><em class="ikon ikon-distribution"></em> {{ get_page('distribution', 'title') }}</a></li>
                         @endif
