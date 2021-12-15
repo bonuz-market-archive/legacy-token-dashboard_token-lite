@@ -13599,7 +13599,7 @@ body {
 	background-color: #070e60;
 	background-size: cover;
 	color: #fff;
-	font-family: "Farro", sans-serif;
+	font-family: "Farro", sans-serif !important;
 }
 body.user-dashboard .card-full-height {
 	background: rgba(29, 29, 27, 0.8);
