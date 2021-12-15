@@ -13186,7 +13186,6 @@ p + .timeline-content-info {
 	font-size: 0.66em;
 	color: #495463;
 	letter-spacing: normal;
-	margin-top: 10px;
 }
 .page-ath-heading span {
 	display: block;
@@ -13677,7 +13676,7 @@ h4,
 h5,
 .page-ath-heading,
 c.step-head-text h4 {
-	color: #9e368b;
+	color: #ffffff;
 	font-weight: 500;
 }
 p a,
