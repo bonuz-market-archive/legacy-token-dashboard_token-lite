@@ -13759,3 +13759,21 @@ a:active {
 	background-repeat: no-repeat;
 	background-size: contain;
 }
+
+.input-bordered,
+.select2-container--flat .select2-selection--single,
+.select2-container--flat .select2-selection--multiple,
+.select-bordered ~ .select2-container--flat .select2-selection--single {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.input-bordered,
+.input-bordered:focus {
+	color: #afafaf;
+}
+
+.input-bordered {
+	padding: 15px 15px;
+	line-height: initial;
+	font-size: 1.3em;
+}
