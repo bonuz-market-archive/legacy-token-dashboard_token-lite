@@ -13600,7 +13600,7 @@ body {
 	background: url(../images/BG.jpg) top center no-repeat fixed #1d1d1b;
 	background-size: cover;
 	color: #fff;
-	font-family: "Farro";
+	font-family: "Farro", sans-serif;
 }
 body.user-dashboard .card-full-height {
 	background: rgba(29, 29, 27, 0.8);
