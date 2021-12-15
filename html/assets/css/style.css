@@ -2138,12 +2138,12 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .btn-outline.btn-dark:hover,
 .btn-outline.btn-dark:focus,
 .btn-outline.btn-dark:active {
-	color: #495463 !important;
-	border-color: #b1becc;
+	color: #fff !important;
+	border-color: #6c60ed;
 }
 .btn-outline.btn-dark.active {
-	background: #b1becc !important;
-	border-color: #b1becc;
+	background: #fff !important;
+	border-color: #6c60ed;
 }
 .btn-outline.btn-light {
 	color: #758698;
@@ -13808,11 +13808,10 @@ h4.card-title.card-title-lg {
 
 .table td .lead,
 .tile-data-number,
-.btn-outline.btn-dark .btn-outline.btn-dark:hover,
 .lead.tnx-id,
 .lead.token-amount,
 .lead.amount-pay,
 .lead.amount-receive,
-.pay-with {
+.sub.sub-s2.pay-with {
 	color: #ffffff;
 }
