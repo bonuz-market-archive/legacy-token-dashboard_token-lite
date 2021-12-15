@@ -13596,7 +13596,7 @@ p + .timeline-content-info {
 @import url("https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700&display=swap");
 
 body {
-	background: url(../images/BG.jpg) top center no-repeat fixed #1d1d1b;
+	background-color: #070e60;
 	background-size: cover;
 	color: #fff;
 	font-family: "Farro", sans-serif;
@@ -13606,7 +13606,7 @@ body.user-dashboard .card-full-height {
 	border-radius: 10px;
 }
 .page-ath-gfx {
-	background: url(../images/ath-gfx.png) center center no-repeat;
+	background: url(../images/ath-gfx.png) center center no-repeat #050940;
 	background-size: auto;
 }
 .topbar,
