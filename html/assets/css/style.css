@@ -13826,3 +13826,9 @@ h4.card-title.card-title-lg {
 .account-info.card {
 	display: none;
 }
+
+.footer-links li a,
+.copyright-text {
+	font-size: 15px;
+	font-weight: 400;
+}
