@@ -13810,7 +13810,8 @@ h4.card-title.card-title-lg {
 .tile-data-number,
 .btn-outline.btn-dark .btn-outline.btn-dark:hover,
 .lead.tnx-id,
-.lead.token-amount .lead.amount-pay,
+.lead.token-amount,
+.lead.amount-pay,
 .lead.amount-receive,
 .pay-with {
 	color: #ffffff;
