@@ -13617,8 +13617,7 @@ body.user-dashboard .card-full-height {
 	background: #212227;
 }
 .token-statistics .card-innr {
-	background: rgb(158, 54, 139);
-	background: linear-gradient(45deg, rgba(158, 54, 139, 1) 0%, rgba(43, 157, 200, 1) 49%, rgba(17, 166, 173, 1) 100%);
+	background: linear-gradient(270.9deg, var(--gradient-color-1) -2.92%, var(--gradient-color-2) 99.95%);
 }
 .card {
 	color: #fff;
@@ -13822,5 +13821,5 @@ h4.card-title.card-title-lg {
 }
 
 .content-welcome-block > .card-innr {
-    background: #030b4d !important;
+	background: #030b4d !important;
 }
