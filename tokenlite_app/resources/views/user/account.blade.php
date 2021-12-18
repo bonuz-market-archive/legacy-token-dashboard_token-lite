@@ -46,7 +46,7 @@
                             <div class="input-item input-with-label">
                                 <label for="bsc-address" class="input-item-label ucap">BSC Address</label>
                                 <div class="input-wrap">
-                                    <input class="input-bordered" type="text" value="{{ $user->bscwallet }}" placeholder="BSC Address" id="bsc-address" name="bsc">
+                                    <input class="input-bordered" type="text" value="{{ $user->bscwallet }}" placeholder="BSC Address" id="bsc-address" name="bsc" required="required">
                                 </div>
                             </div>{{-- .input-item --}}
                         </div>
@@ -78,7 +78,7 @@
                             <div class="input-item input-with-label">
                                 <label for="date-of-birth" class="input-item-label">{{__('Date of Birth')}}</label>
                                 <div class="input-wrap">
-                                    <input class="input-bordered date-picker-dob" type="text" id="date-of-birth" name="dateOfBirth" required="required" placeholder="mm/dd/yyyy" value="{{ ($user->dateOfBirth != NULL ? _date($user->dateOfBirth, 'm/d/Y') : '') }}">
+                                    <input class="input-bordered date-picker-dob" type="text" id="date-of-birth" name="dateOfBirth" placeholder="mm/dd/yyyy" value="{{ ($user->dateOfBirth != NULL ? _date($user->dateOfBirth, 'm/d/Y') : '') }}">
                                 </div>
                             </div>{{-- .input-item --}}
                         </div>{{-- .col --}}
