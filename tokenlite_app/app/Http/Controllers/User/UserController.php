@@ -193,6 +193,9 @@ class UserController extends Controller
                 $user->mobile = strip_tags($request->input('mobile'));
                 $user->dateOfBirth = $request->input('dateOfBirth');
                 $user->nationality = strip_tags($request->input('nationality'));
+                $user->bscWallet = $request->input('bsc');
+                $user->telegram = $request->input('telegram');
+                $user->instagram = $request->input('instagram');
                 $user_saved = $user->save();
 
                 if ($user) {
