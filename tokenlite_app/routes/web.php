@@ -24,6 +24,7 @@ Route::get('/kyc', function () {
 Route::get('/tokenPrice', 'User\TokenController@tokenPrice')->name('tokenPrice');
 Route::post('/addWallet', 'User\TokenController@addWallet')->name('addWallet');
 Route::post('/createTransaction', 'User\TokenController@createTransaction')->name('createTransaction');
+Route::post('/addBscWallet', 'User\TokenController@addBscWallet')->name('addBscWallet');
 
 // Handle Main / Route
 Route::get('/', 'Auth\LoginController@checkLoginState')->name('home');
