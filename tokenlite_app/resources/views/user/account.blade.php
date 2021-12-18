@@ -46,7 +46,7 @@
                             <div class="input-item input-with-label">
                                 <label for="bsc-address" class="input-item-label ucap">BSC Address</label>
                                 <div class="input-wrap">
-                                    <input class="input-bordered" type="text" value="{{ $user->bscwallet }}" placeholder="BSC Address" id="bsc-address" name="bsc" required="required">
+                                    <input class="input-bordered" type="text" value="{{ $user->bscWallet }}" placeholder="BSC Address" id="bsc-address" name="bsc" required="required">
                                 </div>
                             </div>{{-- .input-item --}}
                         </div>
