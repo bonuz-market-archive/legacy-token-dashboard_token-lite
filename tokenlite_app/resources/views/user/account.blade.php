@@ -74,14 +74,16 @@
                                 </div>
                             </div>{{-- .input-item --}}
                         </div>
+                        {{--
                         <div class="col-md-6">
                             <div class="input-item input-with-label">
                                 <label for="date-of-birth" class="input-item-label">{{__('Date of Birth')}}</label>
                                 <div class="input-wrap">
                                     <input class="input-bordered date-picker-dob" type="text" id="date-of-birth" name="dateOfBirth" placeholder="mm/dd/yyyy" value="{{ ($user->dateOfBirth != NULL ? _date($user->dateOfBirth, 'm/d/Y') : '') }}">
                                 </div>
-                            </div>{{-- .input-item --}}
-                        </div>{{-- .col --}}
+                            </div>
+                        </div>
+                        --}}
                         <div class="col-md-6">
                             <div class="input-item input-with-label">
                                 <label for="nationality" class="input-item-label">{{__('Nationality')}}</label>

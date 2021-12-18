@@ -175,7 +175,8 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'email' => 'required|email',
-                'dateOfBirth' => 'required|date_format:"m/d/Y"'
+                'dateOfBirth' => 'date_format:"m/d/Y"',
+                'bsc' => 'required'
             ]);
 
             if ($validator->fails()) {
