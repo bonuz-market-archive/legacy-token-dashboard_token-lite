@@ -13832,3 +13832,7 @@ h4.card-title.card-title-lg {
 	font-size: 15px;
 	font-weight: 400;
 }
+
+.navbar.navbar-mobile.active {
+	z-index: 100;
+}
