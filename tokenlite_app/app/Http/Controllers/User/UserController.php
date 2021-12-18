@@ -10,6 +10,7 @@ namespace App\Http\Controllers\User;
  * @author Softnio
  * @version 1.0.6
  */
+
 use Auth;
 use Validator;
 use IcoHandler;
@@ -47,7 +48,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if( !$this->handler->check_body() && empty(app_key()) ){
+        if (!$this->handler->check_body() && empty(app_key())) {
             Auth::logout();
             return redirect()->route('login')->with([
                 'warning' => $this->handler->accessMessage()
@@ -80,12 +81,12 @@ class UserController extends Controller
         $g2fa = new Google2FA();
         $google2fa_secret = $g2fa->generateSecretKey();
         $google2fa = $g2fa->getQRCodeUrl(
-            site_info().'-'.$user->name,
+            site_info() . '-' . $user->name,
             $user->email,
             $google2fa_secret
         );
 
-        return view('user.account', compact('user', 'userMeta','countries', 'google2fa', 'google2fa_secret'));
+        return view('user.account', compact('user', 'userMeta', 'countries', 'google2fa', 'google2fa_secret'));
     }
 
     /**
@@ -115,7 +116,7 @@ class UserController extends Controller
      */
     public function mytoken_balance()
     {
-        if(gws('user_mytoken_page')!=1) {
+        if (gws('user_mytoken_page') != 1) {
             return redirect()->route('user.home');
         }
         $user = Auth::user();
@@ -145,7 +146,7 @@ class UserController extends Controller
         }
         if ($remove) {
             $ret['msg'] = 'success';
-            $ret['message'] = __('messages.delete.delete', ['what'=>'Activity']);
+            $ret['message'] = __('messages.delete.delete', ['what' => 'Activity']);
         } else {
             $ret['msg'] = 'warning';
             $ret['message'] = __('messages.form.wrong');
@@ -400,7 +401,7 @@ class UserController extends Controller
             } else {
                 $user = Auth::user();
                 if ($user) {
-                    if (! Hash::check($request->input('old-password'), $user->password)) {
+                    if (!Hash::check($request->input('old-password'), $user->password)) {
                         $ret['msg'] = 'warning';
                         $ret['message'] = __('messages.password.old_err');
                     } else {
@@ -416,7 +417,7 @@ class UserController extends Controller
                                 $ret['message'] = __('messages.password.changed');
                             } catch (\Exception $e) {
                                 $ret['msg'] = 'warning';
-                                $ret['message'] = __('messages.email.password_change',['email' => get_setting('site_email')]);
+                                $ret['message'] = __('messages.email.password_change', ['email' => get_setting('site_email')]);
                             }
                         } else {
                             $ret['msg'] = 'warning';
@@ -429,31 +430,31 @@ class UserController extends Controller
                 }
             }
         }
-        if($type == 'google2fa_setup'){
+        if ($type == 'google2fa_setup') {
             $google2fa = $request->input('google2fa', 0);
             $user = User::FindOrFail(Auth::id());
-            if($user){
+            if ($user) {
                 // Google 2FA
                 $ret['link'] = route('user.account');
-                if(!empty($request->google2fa_code)){
+                if (!empty($request->google2fa_code)) {
                     $g2fa = new Google2FA();
-                    if($google2fa == 1){
+                    if ($google2fa == 1) {
                         $verify = $g2fa->verifyKey($request->google2fa_secret, $request->google2fa_code);
-                    }else{
+                    } else {
                         $verify = $g2fa->verify($request->google2fa_code, $user->google2fa_secret);
                     }
 
-                    if($verify){
+                    if ($verify) {
                         $user->google2fa = $google2fa;
                         $user->google2fa_secret = ($google2fa == 1 ? $request->google2fa_secret : null);
                         $user->save();
                         $ret['msg'] = 'success';
-                        $ret['message'] = __('Successfully '.($google2fa == 1 ? 'enable' : 'disable').' 2FA security in your account.');
-                    }else{
+                        $ret['message'] = __('Successfully ' . ($google2fa == 1 ? 'enable' : 'disable') . ' 2FA security in your account.');
+                    } else {
                         $ret['msg'] = 'error';
                         $ret['message'] = __('You have provide a invalid 2FA authentication code!');
                     }
-                }else{
+                } else {
                     $ret['msg'] = 'warning';
                     $ret['message'] = __('Please enter a valid authentication code!');
                 }
@@ -516,9 +517,9 @@ class UserController extends Controller
     {
         $page = Page::where('slug', 'referral')->where('status', 'active')->first();
         $reffered = User::where('referral', auth()->id())->get();
-        if(get_page('referral', 'status') == 'active'){
+        if (get_page('referral', 'status') == 'active') {
             return view('user.referral', compact('page', 'reffered'));
-        }else{
+        } else {
             abort(404);
         }
     }
