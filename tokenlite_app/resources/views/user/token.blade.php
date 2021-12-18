@@ -9,7 +9,7 @@ $user = Auth::user();
 if (!isset($user) || $user == null)
     $bscWallet = "";
 
-echo "<script type='text/javascript'>window.bscWallet = '".$bscWallet."';</script>
+echo "<script type='text/javascript'>window.bscWallet = '".$bscWallet."';</script>";
 
 $email=print_r($user->email, true);
 if ($email != 'tokenlite@olimo.me') {
