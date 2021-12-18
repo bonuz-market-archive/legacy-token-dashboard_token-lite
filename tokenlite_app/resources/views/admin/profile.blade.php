@@ -1,13 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Admin Profile')
 
-@php
-
-echo "<script type='text/javascript'>console.log('test');</script>";
-
-@endphp
-
-
 @section('content')
 <div class="page-content">
     <div class="container">
@@ -48,30 +41,6 @@ echo "<script type='text/javascript'>console.log('test');</script>";
                                                     <label for="email-address" class="input-item-label ucap">Email Address</label>
                                                     <div class="input-wrap">
                                                         <input class="input-bordered" type="text" value="{{ $user->email }}" placeholder="Email Address" id="email-address" name="email" disabled="">
-                                                    </div>
-                                                </div>{{-- .input-item --}}
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-item input-with-label">
-                                                    <label for="bsc-address" class="input-item-label ucap">BSC Address</label>
-                                                    <div class="input-wrap">
-                                                        <input class="input-bordered" type="text" value="{{ $user->bscwallet }}" placeholder="BSC Address" id="bsc-address" name="bsc" disabled="">
-                                                    </div>
-                                                </div>{{-- .input-item --}}
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-item input-with-label">
-                                                    <label for="telegram-handle" class="input-item-label ucap">Telegram Handle</label>
-                                                    <div class="input-wrap">
-                                                        <input class="input-bordered" type="text" value="{{ $user->telegram }}" placeholder="Telegram Handle" id="telegram-handle" name="telegram" disabled="">
-                                                    </div>
-                                                </div>{{-- .input-item --}}
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-item input-with-label">
-                                                    <label for="instagram-handle" class="input-item-label ucap">Instagram Handle</label>
-                                                    <div class="input-wrap">
-                                                        <input class="input-bordered" type="text" value="{{ $user->instagram }}" placeholder="Instagram Handle" id="instagram-handle" name="instagram" disabled="">
                                                     </div>
                                                 </div>{{-- .input-item --}}
                                             </div>
