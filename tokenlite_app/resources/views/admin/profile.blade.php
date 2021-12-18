@@ -207,9 +207,9 @@
                         <p><strong>Step 2:</strong> Scan the QR code by your Google Authenticator app, or you can add account manually.</p>
                         <p>Manually add Account: <br>Account Name: <strong>{{ site_info() }}</strong> <br> Key: <strong>{{ $google2fa_secret }}</strong></p>
                         <div class="row g2fa-box">
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <img class="img-thumbnail" src="{{ route('public.qrgen', ['text' => $google2fa]) }}" alt="">
-                            </div>
+                            </div> --}}
                             <div class="col-md-8">
                                 <div class="input-item">
                                     <label for="google2fa_code">Enter Google Authenticator Code</label>
