@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 @section('title', 'Admin Profile')
 
+@php
+
+echo "<script type='text/javascript'>console.log('test');</script>";
+
+@endphp
+
+
 @section('content')
 <div class="page-content">
     <div class="container">
