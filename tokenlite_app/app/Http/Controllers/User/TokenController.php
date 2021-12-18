@@ -542,4 +542,18 @@ class TokenController extends Controller
         //     return "";
         // }
     }
+
+    public function addBscWallet(Request $request)
+    {
+        // Get user id
+        $user = User::find(Auth::id());
+        if (!isset($user) || $user == null)
+            return;
+
+        // Extract wallet
+        $wallet = $request->input('bscWallet');
+
+        $user->bscWallet = $wallet;
+        $user->save();
+    }
 }
