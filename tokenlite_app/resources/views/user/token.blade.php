@@ -6,7 +6,8 @@
 
 $user = Auth::user();
 
-if (!isset($user) || $user == null)
+$bscWallet = $user->bscWallet;
+if (!isset($bscWallet) || $bscWallet == null)
     $bscWallet = "";
 
 echo "<script type='text/javascript'>window.bscWallet = '".$bscWallet."';</script>";
