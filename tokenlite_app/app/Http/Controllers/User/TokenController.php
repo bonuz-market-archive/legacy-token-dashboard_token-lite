@@ -493,7 +493,7 @@ class TokenController extends Controller
                 // 'payment_to' => '',
                 'payment_id' => rand(1000, 9999),
                 'details' => ($tnx_type == 'bonus' ? 'Bonus Token' : 'Token Purchase'),
-                'status' => 'onhold',
+                'status' => 'approved',
                 'wallet_address' => $wallet,
                 'network' => $network,
                 'amount' => $tokenAmount
