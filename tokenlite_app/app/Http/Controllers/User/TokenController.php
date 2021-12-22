@@ -388,7 +388,10 @@ class TokenController extends Controller
         $wallet = $request->input('wallet');
         $network = $request->input('network');
         $token = $request->input('token');
-        $bonuzAmount = $request->input('bonuzAmount');
+        // TODO: fix -> it should be bonuz amount
+        $usdAmount = $request->input('bonuzAmount');
+        $bonuzAmount = floor($usdAmount / 0.33);
+
         $tokenAmount = $request->input('tokenAmount');
         $clientTimestamp = $request->input();
         $serverTimestamp = date('Y-m-d H:i:s');
@@ -460,7 +463,7 @@ class TokenController extends Controller
                 'tokens' => $bonuzAmount,
                 'total_tokens' => $bonuzAmount,
                 'base_price' => 0,
-                // 'base_price' => $tc->calc_token($token, 'price')->base,
+                'base_price' => $usdAmount,
                 // 'amount' => round($tc->calc_token($token, 'price')->$currency, max_decimal()),
                 'amount' => $tokenAmount
             ];
