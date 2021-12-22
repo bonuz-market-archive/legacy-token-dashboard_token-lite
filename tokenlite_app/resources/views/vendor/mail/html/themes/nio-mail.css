@@ -1,13 +1,14 @@
 /* Base */
 
-body, body *:not(html):not(style):not(br):not(tr):not(code) {
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
     font-family: Avenir, Helvetica, sans-serif;
     box-sizing: border-box;
 }
 
 body {
     background-color: #eaf3fc;
-    color: #526283;/*#74787E;*/
+    color: #526283; /*#74787E;*/
     height: 100%;
     hyphens: auto;
     line-height: 1.4;
@@ -29,7 +30,7 @@ blockquote {
 }
 
 a {
-    color: #3869D4;
+    color: #3869d4;
 }
 
 a img {
@@ -39,7 +40,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #2F3133;
+    color: #2f3133;
     font-size: 19px;
     font-weight: bold;
     margin-top: 0;
@@ -47,7 +48,7 @@ h1 {
 }
 
 h2 {
-    color: #2F3133;
+    color: #2f3133;
     font-size: 16px;
     font-weight: bold;
     margin-top: 0;
@@ -55,7 +56,7 @@ h2 {
 }
 
 h3 {
-    color: #2F3133;
+    color: #2f3133;
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
@@ -63,7 +64,7 @@ h3 {
 }
 
 p {
-    color: #74787E;
+    color: #74787e;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
@@ -105,7 +106,7 @@ img {
     padding: 20px 0 0 0;
     text-align: center;
 }
-.header img{
+.header img {
     max-height: 75px;
 }
 .header p {
@@ -128,8 +129,8 @@ img {
 
 .body {
     background-color: transparent;
-    border-bottom: 1px solid #EDEFF2;
-    border-top: 1px solid #EDEFF2;
+    border-bottom: 1px solid #edeff2;
+    border-top: 1px solid #edeff2;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -151,7 +152,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #EDEFF2;
+    border-top: 1px solid #edeff2;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -184,21 +185,21 @@ img {
     padding: 0;
     text-align: center;
 }
-.social li{
-    display: inline-block; 
-    list-style: none; 
+.social li {
+    display: inline-block;
+    list-style: none;
     padding: 4px;
 }
-.social li a{
-    display: inline-block; 
-    height: 30px; 
-    width:30px;
-    border-radius: 50%; 
-    background-color: #ffffff
+.social li a {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #ffffff;
 }
 
-.social li a img{
-    width: 30px
+.social li a img {
+    width: 30px;
 }
 
 /* Tables */
@@ -212,13 +213,13 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #EDEFF2;
+    border-bottom: 1px solid #edeff2;
     padding-bottom: 8px;
     margin: 0;
 }
 
 .table td {
-    color: #74787E;
+    color: #74787e;
     font-size: 15px;
     line-height: 18px;
     padding: 10px 0;
@@ -244,7 +245,7 @@ img {
 .button {
     border-radius: 3px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
-    color: #FFF;
+    color: #fff;
     display: inline-block;
     text-decoration: none;
     -webkit-text-size-adjust: none;
@@ -297,26 +298,26 @@ img {
 .center h3,
 .center h4,
 .center h5,
-.center h6{
+.center h6 {
     text-align: center !important;
 }
 .panel-content.warning,
-.panel-content.submitted{
+.panel-content.submitted {
     border-bottom: 4px solid #ffc100 !important;
     text-align: center !important;
 }
 .panel-content.success,
-.panel-content.approved{
+.panel-content.approved {
     border-bottom: 4px solid #00d285 !important;
     text-align: center !important;
 }
 .panel-content.info,
-.panel-content.missing{
+.panel-content.missing {
     border-bottom: 4px solid #e3edf8 !important;
     text-align: center !important;
 }
 .panel-content.danger,
-.panel-content.rejected{
+.panel-content.rejected {
     border-bottom: 4px solid #ff6876 !important;
     text-align: center !important;
 }
@@ -334,7 +335,7 @@ img {
 
 .promotion {
     background-color: transparent;
-    border: 2px dashed #9BA2AB;
+    border: 2px dashed #9ba2ab;
     margin: 0;
     margin-bottom: 25px;
     margin-top: 25px;
@@ -370,12 +371,12 @@ img {
 .table.order {
     width: 100%;
     margin: 20px 0px 30px;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 .table.order th {
     text-align: left;
     padding: 0px 15px 7px 0px;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 .table.order td {
     font-size: 14px;
