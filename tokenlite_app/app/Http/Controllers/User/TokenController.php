@@ -532,6 +532,12 @@ class TokenController extends Controller
             //     Transaction::where('id', $iid)->delete();
             // }
 
+
+            // Update balance
+            $user = User::find(Auth::id());
+            $user->tokenBalance = $user->tokenBalance + $bonuzAmount;
+            $user->save();
+
             echo "UserId: $userId --- $iid";
         }
 
