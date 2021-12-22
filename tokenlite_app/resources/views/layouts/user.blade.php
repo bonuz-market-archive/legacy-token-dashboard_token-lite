@@ -22,7 +22,7 @@
 <?php
 
 $email = print_r(Auth::user()->email, true);
-$isTestUser = $email == 'tokenlite@olimo.me';
+$isTestUser = $email == 'tokenlite@olimo.me' || $email == "m@bonuz.market";
 
 ?>
 

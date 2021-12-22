@@ -13,7 +13,8 @@ if (!isset($bscWallet) || $bscWallet == null)
 echo "<script type='text/javascript'>window.bscWallet = '".$bscWallet."';</script>";
 
 $email=print_r($user->email, true);
-if ($email != 'tokenlite@olimo.me') {
+$isTestUser = $email == 'tokenlite@olimo.me' || $email == "m@bonuz.market";
+if (!$isTestUser) {
     exit();
 }
 
