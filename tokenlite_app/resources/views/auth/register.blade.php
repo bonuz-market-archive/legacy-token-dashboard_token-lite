@@ -43,7 +43,8 @@ $check_users = \App\Models\User::count();
 
         <div class="input-item text-left">
             <input name="newsletter" class="input-checkbox input-checkbox-md" id="newsletter" type="checkbox">
-            <label for="newsletter">{!! __('I agree to the') . ' newsletter.' !!}</label>
+            {{-- <label for="newsletter">{!! __('I agree to the') . ' newsletter.' !!}</label> --}}
+            <label for="newsletter">I agree on news about Bonuz & token launches.</label>
         </div>
 
         @if(( application_installed(true)) && ($check_users > 0))
