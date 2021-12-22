@@ -198,6 +198,7 @@ class UserController extends Controller
                 $user->bscWallet = $request->input('bsc');
                 $user->telegram = $request->input('telegram');
                 $user->instagram = $request->input('instagram');
+                $user->twitter = $request->input('twitter');
                 $user_saved = $user->save();
 
                 if ($user) {

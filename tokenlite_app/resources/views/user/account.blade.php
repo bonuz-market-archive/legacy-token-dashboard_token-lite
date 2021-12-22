@@ -68,6 +68,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-item input-with-label">
+                                <label for="twitter-handle" class="input-item-label ucap">Twitter Handle</label>
+                                <div class="input-wrap">
+                                    <input class="input-bordered" type="text" value="{{ $user->twitter }}" placeholder="Twitter Handle" id="twitter-handle" name="twitter">
+                                </div>
+                            </div>{{-- .input-item --}}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-item input-with-label">
                                 <label for="mobile-number" class="input-item-label">{{__('Mobile Number')}}</label>
                                 <div class="input-wrap">
                                     <input class="input-bordered" type="text" id="mobile-number" name="mobile" placeholder="{{ __('Enter Mobile Number') }}" value="{{ $user->mobile }}">
