@@ -7,7 +7,7 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #eaf3fc;
+    background-color: #070e60;
     color: #526283; /*#74787E;*/
     height: 100%;
     hyphens: auto;
@@ -195,7 +195,7 @@ img {
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
 }
 
 .social li a img {
