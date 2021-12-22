@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EmailToUser
  *
@@ -8,6 +9,7 @@
  * @author Softnio
  * @version 1.0
  */
+
 namespace App\Mail;
 
 use App\Models\EmailTemplate;
