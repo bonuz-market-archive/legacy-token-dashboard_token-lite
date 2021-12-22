@@ -129,8 +129,8 @@ img {
 
 .body {
     background-color: transparent;
-    border-bottom: 1px solid #edeff2;
-    border-top: 1px solid #edeff2;
+    border-bottom: 1px solid #070e60;
+    border-top: 1px solid #070e60;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -152,7 +152,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #edeff2;
+    border-top: 1px solid #070e60;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -213,7 +213,7 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #edeff2;
+    border-bottom: 1px solid #070e60;
     padding-bottom: 8px;
     margin: 0;
 }
