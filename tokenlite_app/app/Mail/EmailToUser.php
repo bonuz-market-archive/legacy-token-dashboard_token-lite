@@ -56,7 +56,7 @@ class EmailToUser extends Mailable implements ShouldQueue
         $greeting = $this->data->greeting != '' ? $this->data->greeting : $et->greeting;
         $greeting = replace_with($greeting, '[[user_name]]', "<strong>" . $this->data->user->name . "</strong>");
         $et->regards = ($et->regards == 'true' ? get_setting('site_mail_footer') : null);
-        $regards = $et->regards != '' ? replace_shortcode($et->regards) : 'Best Regards, <br>' . $from_name;
+        $regards = $et->regards != '' ? replace_shortcode($et->regards) : 'Best Regards, <br>nYour Bonuz Team';
 
         return $this->from($from_email, $from_name)
             ->subject($subject)

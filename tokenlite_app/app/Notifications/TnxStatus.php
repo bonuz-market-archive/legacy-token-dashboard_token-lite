@@ -53,8 +53,8 @@ class TnxStatus extends Notification implements ShouldQueue
         $user = $this->tnx_data->tnxUser;
 
         $template->message = $this->replace_shortcode($template->message);
-        $template->regards = ($template->regards == 'true' ? get_setting('site_mail_footer', "Best Regards, \n[[site_name]]") : '');
-        
+        $template->regards = ($template->regards == 'true' ? get_setting('site_mail_footer', "Best Regards, \nYour Bonuz Team") : '');
+
         return (new MailMessage)
                     ->greeting($this->replace_shortcode($template->greeting))
                     ->salutation($this->replace_shortcode($template->regards))
