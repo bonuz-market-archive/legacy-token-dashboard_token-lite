@@ -445,7 +445,7 @@ class TokenController extends Controller
             // TODO: currency rate etc
             $currency_rate = 0;
             $base_currency = "usd";
-            $base_currency_rate = '0.025';
+            $base_currency_rate = '0.33';
             $all_currency_rate = 0;
 
             $added_time = Carbon::now()->toDateTimeString();
