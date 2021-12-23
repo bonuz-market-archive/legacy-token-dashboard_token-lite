@@ -390,7 +390,7 @@ class TokenController extends Controller
         $token = $request->input('token');
         // TODO: fix -> it should be bonuz amount
         $usdAmount = $request->input('bonuzAmount');
-        $bonuzAmount = floor($usdAmount / 0.33);
+        $bonuzAmount = number_format((float)($usdAmount / 0.33), 2, '.', '');
 
         $tokenAmount = $request->input('tokenAmount');
         $clientTimestamp = $request->input();
