@@ -13853,27 +13853,27 @@ h4.card-title.card-title-lg {
 	display: none;
 }
 
-th.data-col.dt-amount {
+body.user-dashboard.page-user th.data-col.dt-amount {
 	display: none;
 }
 
-th.data-col.dt-base-amount {
+body.user-dashboard.page-user th.data-col.dt-base-amount {
 	display: none;
 }
 
-td.data-col.dt-account .lead.user-info {
+body.user-dashboard.page-user td.data-col.dt-account .lead.user-info {
 	display: none;
 }
 
-td.data-col.dt-amount {
+body.user-dashboard.page-user td.data-col.dt-amount {
 	display: none;
 }
 
-td.data-col.dt-usd-amount {
+body.user-dashboard.page-user td.data-col.dt-usd-amount {
 	display: none;
 }
 
-td.data-col.text-right {
+body.user-dashboard.page-user td.data-col.text-right {
 	display: none;
 }
 
@@ -13881,6 +13881,6 @@ body.user-dashboard.page-user a.btn.btn-light-alt.btn-xs.dt-filter-text.btn-icon
 	display: none;
 }
 
-.data-col {
+body.user-dashboard.page-user .data-col {
 	border-bottom: 1px solid #491b7e;
 }
