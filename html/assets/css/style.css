@@ -13852,3 +13852,35 @@ h4.card-title.card-title-lg {
 .token-sales.card .token-rate:nth-child(2) {
 	display: none;
 }
+
+th.data-col.dt-amount {
+	display: none;
+}
+
+th.data-col.dt-base-amount {
+	display: none;
+}
+
+td.data-col.dt-account .lead.user-info {
+	display: none;
+}
+
+td.data-col.dt-amount {
+	display: none;
+}
+
+td.data-col.dt-usd-amount {
+	display: none;
+}
+
+td.data-col.text-right {
+	display: none;
+}
+
+body.user-dashboard.page-user a.btn.btn-light-alt.btn-xs.dt-filter-text.btn-icon.toggle-tigger {
+	display: none;
+}
+
+.data-col {
+	border-bottom: 1px solid #491b7e;
+}
