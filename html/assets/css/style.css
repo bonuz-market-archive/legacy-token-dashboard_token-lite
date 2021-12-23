@@ -13836,3 +13836,11 @@ h4.card-title.card-title-lg {
 .navbar.navbar-mobile.active {
 	z-index: 100;
 }
+
+.token-balance.token-balance-s2 {
+	display: none;
+}
+
+.token-balance.token-balance-with-icon {
+	margin-bottom: 0;
+}
