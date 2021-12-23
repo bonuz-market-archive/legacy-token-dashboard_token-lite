@@ -13844,3 +13844,11 @@ h4.card-title.card-title-lg {
 .token-balance.token-balance-with-icon {
 	margin-bottom: 0;
 }
+
+.token-sales.card .token-rate:first-child {
+	margin-bottom: 0;
+}
+
+.token-sales.card .token-rate:nth-child(2) {
+	display: none;
+}
