@@ -116,7 +116,7 @@ class UserPanel
         $return = '<div' . $g_id . ' class="token-statistics card card-token' . $g_cls . '">
         <div class="card-innr"><div class="token-balance' . $ver_cls . '">' . $ver_icon . '
         <div class="token-balance-text"><h6 class="card-sub-title">' . __('Token Balance') . '</h6>
-        <span class="lead">' . to_num_token($user->tokenBalance) . ' <span>' . token('symbol') . ' <em class="fas fa-info-circle fs-11" data-toggle="tooltip" data-placement="right" title="' . __('Equivalent to') . ' ' . token_price($user->tokenBalance, base_currency()) . ' ' . base_currency(true) . '"></em></span></span>
+        <span class="lead">' . $user->tokenBalance . ' <span>' . token('symbol') . ' <em class="fas fa-info-circle fs-11" data-toggle="tooltip" data-placement="right" title="' . __('Equivalent to') . ' ' . token_price($user->tokenBalance, base_currency()) . ' ' . base_currency(true) . '"></em></span></span>
         </div>
         </div>' . $contribute . '</div></div>';
 
