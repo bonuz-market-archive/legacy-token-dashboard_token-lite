@@ -12,11 +12,11 @@ if (!isset($bscWallet) || $bscWallet == null)
 
 echo "<script type='text/javascript'>window.bscWallet = '".$bscWallet."';</script>";
 
-$email=print_r($user->email, true);
-$isTestUser = $email == 'tokenlite@olimo.me' || $email == "m@bonuz.market";
-if (!$isTestUser) {
-    exit();
-}
+// $email=print_r($user->email, true);
+// $isTestUser = $email == 'tokenlite@olimo.me' || $email == "m@bonuz.market";
+// if (!$isTestUser) {
+//     exit();
+// }
 
 $has_sidebar = false;
 $content_class = 'col-lg-8';
