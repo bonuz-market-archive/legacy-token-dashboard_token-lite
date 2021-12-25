@@ -69,7 +69,7 @@ $isTestUser = $email == 'tokenlite@olimo.me' || $email == "m@bonuz.market";
                         <li><a href="{{ route('user.home') }}"><em class="ikon ikon-dashboard"></em> {{__('Dashboard')}}</a></li>
 
                         <?php if ($isTestUser) { ?>
-                            <li><a href="{{ route('user.token') }}"><em class="ikon ikon-coins"></em> {{__('Buy Token')}}</a></li>
+                            <li><a href="{{ route('user.token') }}"><em class="ikon ikon-coins"></em> Buy Tokens</a></li>
                         <?php } ?>
 
                         @if(get_page('distribution', 'status') == 'active')
