@@ -18,14 +18,14 @@ class APIController extends Controller
 {
     public function __construct()
     {
-        if( $this->hasKey() === false && !app()->runningInConsole()){
+        if ($this->hasKey() === false && !app()->runningInConsole()) {
             throw new APIException("Provide valid access key", 401);
         }
     }
     /**
      * Check the API key 
      */
-    protected function hasKey() : bool
+    protected function hasKey(): bool
     {
         $api_key = request()->secret;
         return (get_setting('site_api_key', null) == $api_key);
@@ -40,7 +40,7 @@ class APIController extends Controller
         $base = (get_base_bonus($stage->id)) ? get_base_bonus($stage->id) : 0;
         $amount = (get_base_bonus($stage->id, 'amount')) ? get_base_bonus($stage->id, 'amount') : 0;
         $base_dt = ($base > 0) ? get_base_bonus($stage->id, 'base') : [];
-        
+
         $bonus_data = ['base' => $base];
         if ($base > 0) {
             $bonus_data['start'] = isset($base_dt->start_date) ? $base_dt->start_date : $stage->start_date;
@@ -53,23 +53,23 @@ class APIController extends Controller
     /**
      * return the specified resource.
      */
-    protected function stage_data($type='')
+    protected function stage_data($type = '')
     {
         $stage = active_stage();
         $in_caps = (token('sales_cap')) ? token('sales_cap') : 'token';
         $in_total = (token('sales_total')) ? token('sales_total') : 'token';
         $in_raised = (token('sales_raised')) ? token('sales_raised') : 'token';
 
-        $in_caps_cur = ($in_caps=='token') ? base_currency() : $in_caps;
-        $in_total_cur = ($in_total=='token') ? base_currency() : $in_total;
-        $in_raised_cur = ($in_raised=='token') ? base_currency() : $in_raised;
+        $in_caps_cur = ($in_caps == 'token') ? base_currency() : $in_caps;
+        $in_total_cur = ($in_total == 'token') ? base_currency() : $in_total;
+        $in_raised_cur = ($in_raised == 'token') ? base_currency() : $in_raised;
 
         $token = ($stage->total_tokens) ? $stage->total_tokens : 0;
-        $token_cur = to_num_token($token). ' '.token_symbol();
+        $token_cur = to_num_token($token) . ' ' . token_symbol();
         $token_amt = to_num(token_price($token, $in_total_cur), 'auto', ',') . ' ' . strtoupper($in_total_cur);
 
         $sold = ($stage->soldout) ? $stage->soldout : 0; //@v1.1.2 @old sales_token
-        $sold_cur = to_num_token($sold). ' '.token_symbol();
+        $sold_cur = to_num_token($sold) . ' ' . token_symbol();
         $sold_amt = to_num(token_price($sold, $in_raised_cur), 'auto', ',') . ' ' . strtoupper($in_raised_cur);
 
         $soft = ($stage->soft_cap) ? $stage->soft_cap : 0;
@@ -96,15 +96,15 @@ class APIController extends Controller
             'hard' => $hard,
             'hard_amount' => $hard_amt,
         );
-        
+
         $response_full = array(
             'ico' => active_stage_status($stage),
             'total' => $token_cur,
             'total_amount' => $token_amt,
-            'total_token' => $token, 
+            'total_token' => $token,
             'sold' => $sold_cur,
             'sold_amount' => $sold_amt,
-            'sold_token' => $sold, 
+            'sold_token' => $sold,
             'progress' => sale_percent($stage),
             'price' => current_price(),
             'bonus' => $bonus_data,
@@ -112,10 +112,10 @@ class APIController extends Controller
             'end' => $stage->end_date,
             'min' => $stage->min_purchase,
             'max' => $stage->max_purchase,
-            'soft' => ['cap' => $soft, 'amount' => $soft_amt, 'percent' => round(ico_stage_progress('soft'), 2) ],
-            'hard' => ['cap' => $hard, 'amount' => $hard_amt, 'percent' => round(ico_stage_progress('hard'), 2) ],
+            'soft' => ['cap' => $soft, 'amount' => $soft_amt, 'percent' => round(ico_stage_progress('soft'), 2)],
+            'hard' => ['cap' => $hard, 'amount' => $hard_amt, 'percent' => round(ico_stage_progress('hard'), 2)],
         );
-        return ($type=='full') ? $response_full : $response_minimal;
+        return ($type == 'full') ? $response_full : $response_minimal;
     }
 
     /**
@@ -129,7 +129,7 @@ class APIController extends Controller
             'success' => true,
             'response' => $response
         ];
-        
+
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -154,14 +154,14 @@ class APIController extends Controller
      */
     public function bonuses()
     {
-        
+
         $bonus_data = $this->bonus_data();
 
         $data = [
-            'success' => true, 
+            'success' => true,
             'response' => $bonus_data
         ];
-        
+
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -174,10 +174,10 @@ class APIController extends Controller
         $get_price = current_price('base');
         $prices_data = ['price' => $get_price->price, 'min' => $get_price->min_purchase, 'end' => $get_price->end_date];
         $data = [
-            'success' => true, 
+            'success' => true,
             'response' => $prices_data
         ];
-        
+
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -200,15 +200,14 @@ class APIController extends Controller
     // }
 
     public function kyc(Request $request)
-    {        
-
+    {
         $recordId = $request->input('recordId');
 
         // Get record id
         if ($recordId == NULL) {
             throw new \Exception(print_r($request->all(), true));
         }
-        
+
         $clientId = 'bonuz_public_kyc_67c49';
         $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
 
@@ -233,22 +232,22 @@ class APIController extends Controller
         $givenName = $identity->given_name->value;
         $familyName = $identity->family_name->value;
         $name = "$givenName $familyName";
-        
-        
+
+
         $user = User::where('name', $name)->first();
         if ($user == NULL) {
-            
+
             $email = $response->data->identities->email->value;
-            
+
             // Get user by email
             $user = User::where('email', $email)->first();
         }
-        
-        
+
+
         // Get user by name
         // $user = User::whereLike('name', '%' . $name . '%')->first();
 
-                // throw new \Exception($name);
+        // throw new \Exception($name);
 
         $dt = new \DateTime();
         $formattedDateTime = $dt->format('Y-m-d H:i:s');
@@ -269,7 +268,6 @@ class APIController extends Controller
         $kyc->reviewedAt = $formattedDateTime;
 
         $kyc->save();
-
     }
 
     // public function createTransaction(Request $request)
@@ -304,7 +302,7 @@ class APIController extends Controller
     //     echo print_r($wallet, true)
     //     . print_r($amount, true);
     // }
-    
+
     public function backup(Request $request)
     {
         $dbhost = "127.0.0.1";
@@ -328,9 +326,9 @@ class APIController extends Controller
 
         // $lastTime = $request['lastTime'];
 
-         
+
         $dumpfile = $dbname . "_" . date("Y-m-d_H-i-s") . ".sql";
-         
+
         echo "Start dump\n";
         $code = exec("mysqldump --user=$dbuser --password=$dbpassword --host=$dbhost $dbname > $dumpfile");
         echo "-- Dump completed -- ";
