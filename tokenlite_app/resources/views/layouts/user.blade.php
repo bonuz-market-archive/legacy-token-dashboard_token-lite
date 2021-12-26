@@ -12,7 +12,7 @@
     <title>@yield('title') | {{ site_whitelabel('title') }}</title>
     <link rel="stylesheet" href="{{ asset(style_theme('vendor')) }}">
     <link rel="stylesheet" href="{{ asset(style_theme('user')) }}">
-    <script src="{{ asset('assets/js/buytokenwidget/js/bundle.min.js?2') }}"></script>
+    <script src="{{ asset('assets/js/buytokenwidget/js/bundle.min.js?3') }}"></script>
     @stack('header')
     @if(get_setting('site_header_code', false))
     {{ html_string(get_setting('site_header_code')) }}
