@@ -237,7 +237,7 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
 @endpush
 
 @push('footer')
-<link rel="stylesheet" href="{{ asset('assets/js/buytokenwidget/css/bundle.min.css').css_js_ver() }}">
+<link rel="stylesheet" href="{{ asset('assets/js/buytokenwidget/css/bundle.min.css?2') }}">
 <style type="text/css">
     .select-bordered~.select2-container--flat.select2-container--open .select2-selection--single,
     .select-bordered~.select2-container--flat.select2-container--open .select2-selection--multiple {
