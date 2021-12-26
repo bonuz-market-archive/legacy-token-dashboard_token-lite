@@ -270,7 +270,9 @@ class APIController extends Controller
 
             $kyc->save();
         } catch (\Throwable $th) {
-            throw new \Exception($recordId + "\n\n\n" + $th->getMessage());
+            throw $th;
+
+            // throw new \Exception($recordId + "\n\n\n" + $th->getMessage());
         }
     }
 
