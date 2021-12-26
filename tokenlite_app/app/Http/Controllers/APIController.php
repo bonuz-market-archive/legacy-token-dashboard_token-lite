@@ -201,73 +201,79 @@ class APIController extends Controller
 
     public function kyc(Request $request)
     {
-        $recordId = $request->input('recordId');
+        try {
+            $recordId = $request->input('recordId');
 
-        // Get record id
-        if ($recordId == NULL) {
-            throw new \Exception(print_r($request->all(), true));
-        }
+            // Get record id
+            if ($recordId == NULL) {
+                throw new \Exception(print_r($request->all(), true));
+            }
 
-        $clientId = 'bonuz_public_kyc_67c49';
-        $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
+            $clientId = 'bonuz_public_kyc_67c49';
+            $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
 
-        $getUrl = "https://kyc.blockpass.org/kyc/1.0/connect/$clientId/recordId/$recordId";
+            $getUrl = "https://kyc.blockpass.org/kyc/1.0/connect/$clientId/recordId/$recordId";
 
-        // Call blockpass API
-        // $response = \Illuminate\Support\Facades\Http::withHeaders([
-        //     'Authorization' => $blockpassApiKey,
-        //     'cache-control' => 'no-cache'
-        // ])->get($getUrl);
+            // Call blockpass API
+            // $response = \Illuminate\Support\Facades\Http::withHeaders([
+            //     'Authorization' => $blockpassApiKey,
+            //     'cache-control' => 'no-cache'
+            // ])->get($getUrl);
 
-        $client = new \GuzzleHttp\Client();
-        $response = json_decode($client->request('GET', $getUrl, [
-            'headers' => [
-                'Authorization' => $blockpassApiKey,
-                'cache-control' => 'no-cache'
-            ]
-        ])->getBody());
+            $client = new \GuzzleHttp\Client();
+            $response = json_decode($client->request('GET', $getUrl, [
+                'headers' => [
+                    'Authorization' => $blockpassApiKey,
+                    'cache-control' => 'no-cache'
+                ]
+            ])->getBody());
 
-        // Get email of approved user
-        $identity = $response->data->identities;
-        $givenName = $identity->given_name->value;
-        $familyName = $identity->family_name->value;
-        $name = "$givenName $familyName";
+            // Get email of approved user
+            $identity = $response->data->identities;
+            $givenName = $identity->given_name->value;
+            $familyName = $identity->family_name->value;
+            $name = "$givenName $familyName";
 
 
-        $user = User::where('name', $name)->first();
-        if ($user == NULL) {
+            $user = User::where('name', $name)->first();
+            if ($user == NULL) {
 
-            $email = $response->data->identities->email->value;
+                $email = $response->data->identities->email->value;
+
+                // Get user by email
+                $user = User::where('email', $email)->first();
+            }
+
+
+            // Get user by name
+            // $user = User::whereLike('name', '%' . $name . '%')->first();
+
+            // throw new \Exception($name);
+
+            $dt = new \DateTime();
+            $formattedDateTime = $dt->format('Y-m-d H:i:s');
 
             // Get user by email
-            $user = User::where('email', $email)->first();
+            $kyc = KYC::where('email', $user->email)->first();
+            if ($kyc == null) {
+                $kyc = new KYC;
+            }
+
+            $kyc->userId = $user->id;
+            $kyc->email = $user->email;
+            $kyc->firstName = $givenName;
+            $kyc->lastName = $familyName;
+            $kyc->record_id = $recordId;
+            $kyc->status = 'approved';
+            $kyc->reviewedBy = 1;
+            $kyc->reviewedAt = $formattedDateTime;
+
+            $kyc->save();
+        } catch (\Throwable $th) {
+            var_dump($recordId);
+
+            var_dump($th);
         }
-
-
-        // Get user by name
-        // $user = User::whereLike('name', '%' . $name . '%')->first();
-
-        // throw new \Exception($name);
-
-        $dt = new \DateTime();
-        $formattedDateTime = $dt->format('Y-m-d H:i:s');
-
-        // Get user by email
-        $kyc = KYC::where('email', $user->email)->first();
-        if ($kyc == null) {
-            $kyc = new KYC;
-        }
-
-        $kyc->userId = $user->id;
-        $kyc->email = $user->email;
-        $kyc->firstName = $givenName;
-        $kyc->lastName = $familyName;
-        $kyc->record_id = $recordId;
-        $kyc->status = 'approved';
-        $kyc->reviewedBy = 1;
-        $kyc->reviewedAt = $formattedDateTime;
-
-        $kyc->save();
     }
 
     // public function createTransaction(Request $request)
