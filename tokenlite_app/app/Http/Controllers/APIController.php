@@ -270,9 +270,7 @@ class APIController extends Controller
 
             $kyc->save();
         } catch (\Throwable $th) {
-            var_dump($recordId);
-
-            var_dump($th);
+            throw new \Exception($recordId, $th->getMessage());
         }
     }
 
