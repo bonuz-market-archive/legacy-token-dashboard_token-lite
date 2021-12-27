@@ -199,6 +199,40 @@ class APIController extends Controller
     //     "webhookId": null
     // }
 
+    private function kyc_handle_blockpass($recordId)
+    {
+        $clientId = 'bonuz_public_kyc_67c49';
+        $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
+
+        $getUrl = "https://kyc.blockpass.org/kyc/1.0/connect/$clientId/recordId/$recordId";
+
+        // Call blockpass API
+        // $response = \Illuminate\Support\Facades\Http::withHeaders([
+        //     'Authorization' => $blockpassApiKey,
+        //     'cache-control' => 'no-cache'
+        // ])->get($getUrl);
+
+        $client = new \GuzzleHttp\Client();
+        $response = json_decode($client->request('GET', $getUrl, [
+            'headers' => [
+                'Authorization' => $blockpassApiKey,
+                'cache-control' => 'no-cache'
+            ]
+        ])->getBody());
+
+        // Get email of approved user
+        $identity = $response->data->identities;
+        $givenName = $identity->given_name->value;
+        $familyName = $identity->family_name->value;
+
+        $obj = new \stdClass;
+        $obj->givenName = $givenName;
+        $obj->familyName = $familyName;
+        $obj->email = $response->data->identities->email->value;
+
+        return $obj;
+    }
+
     public function kyc(Request $request)
     {
         try {
@@ -209,39 +243,34 @@ class APIController extends Controller
                 throw new \Exception(print_r($request->all(), true));
             }
 
-            $clientId = 'bonuz_public_kyc_67c49';
-            $blockpassApiKey = '3931e01d6a05f12ba47f90a17c3abdfb';
+            $givenName = "";
+            $familyName = "";
+            $name = "";
+            $email = "";
 
-            $getUrl = "https://kyc.blockpass.org/kyc/1.0/connect/$clientId/recordId/$recordId";
-
-            // Call blockpass API
-            // $response = \Illuminate\Support\Facades\Http::withHeaders([
-            //     'Authorization' => $blockpassApiKey,
-            //     'cache-control' => 'no-cache'
-            // ])->get($getUrl);
-
-            $client = new \GuzzleHttp\Client();
-            $response = json_decode($client->request('GET', $getUrl, [
-                'headers' => [
-                    'Authorization' => $blockpassApiKey,
-                    'cache-control' => 'no-cache'
-                ]
-            ])->getBody());
-
-            // Get email of approved user
-            $identity = $response->data->identities;
-            $givenName = $identity->given_name->value;
-            $familyName = $identity->family_name->value;
+            // Check if kyc fixing process should be triggered
+            $fixKyc = $request->input('fix');
+            if ($fixKyc != NULL) {
+                $givenName = $request->input('givenName');
+                $familyName = $request->input('familyName');
+                $email = $request->input('email');
+            } else {
+                $result = $this->kyc_handle_blockpass($recordId);
+                $givenName = $result->givenName;
+                $familyName = $result->familyName;
+                $email = $result->email;
+            }
             $name = "$givenName $familyName";
 
 
             $user = User::where('name', $name)->first();
             if ($user == NULL) {
-
-                $email = $response->data->identities->email->value;
-
                 // Get user by email
                 $user = User::where('email', $email)->first();
+
+                if ($user == NULL) {
+                    throw new \Exception("Could not find user", 1);
+                }
             }
 
 
