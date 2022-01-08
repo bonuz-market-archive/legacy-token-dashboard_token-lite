@@ -31,8 +31,7 @@
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 
-    <h2 class="page-ath-heading">{{ __('Sign in') }}<small>{{ __('with your') }} {{ site_info('name') }}
-            {{ __('Account') }}</small></h2>
+    <h2 class="page-ath-heading">{{ __('Sign in') }}<small>to secure $BONUZ tokens</small></h2>
     <form class="login-form validate validate-modern"
         action="{{ (is_maintenance() ? route('admin.login') : route('login')) }}" method="POST">
         @csrf
