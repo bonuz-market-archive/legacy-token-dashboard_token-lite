@@ -26,6 +26,7 @@ use App\Models\PaymentMethod;
 use App\Notifications\TnxStatus;
 use App\Http\Controllers\Controller;
 use App\Helpers\TokenCalculate as TC;
+use App\Models\Referral;
 
 class TokenController extends Controller
 {
@@ -470,18 +471,21 @@ class TokenController extends Controller
 
             $userId = Auth::id();
 
+            $tnx_date = ($request->tnx_date) ? _cdate($tnx_date)->toDateTimeString() : $added_time;
+
+            $stage = (int) $request->input('stage', active_stage()->id);
             $save_data = [
                 'user' => $userId,
                 'created_at' => $added_time,
                 'tnx_id' => set_id(rand(100, 999), 'trnx'),
                 'tnx_type' => $tnx_type,
-                'tnx_time' => ($request->tnx_date) ? _cdate($tnx_date)->toDateTimeString() : $added_time,
+                'tnx_time' => $tnx_date,
                 'tokens' => $trnx_data['tokens'],
                 'bonus_on_base' => $trnx_data['bonus_on_base'],
                 'bonus_on_token' => $trnx_data['bonus_on_token'],
                 'total_bonus' => $trnx_data['total_bonus'],
                 'total_tokens' => $trnx_data['total_tokens'],
-                'stage' => (int) $request->input('stage', active_stage()->id),
+                'stage' => $stage,
                 'amount' => $trnx_data['amount'],
                 'receive_amount' => $request->input('amount') != '' ? $request->input('amount') : $trnx_data['amount'],
                 'receive_currency' => $token,
@@ -541,6 +545,24 @@ class TokenController extends Controller
             $user->tokenBalance = $user->tokenBalance + $bonuzAmount;
             $user->save();
 
+            $referrals = Referral::where("user_id", "=", Auth::id());
+            if ($referrals->count() > 0) {
+                $referral = $referrals->first();
+
+                if ($referral->refer_by != 0) {
+
+                    // Referral (who referred)
+                    $referral_bonus = get_setting("referral_bonus");
+                    $referralBonusEarned = number_format((float)($bonuzAmount * (1 + ($referral_bonus / 100))), 2, '.', '');
+                    $this->createBonusTransaction($referral->refer_by, $added_time, $tnx_date, $stage, $referralBonusEarned, $referral->user_id);
+
+                    // Referral Joined (who was referred)
+                    $referral_bonus_join = get_setting("referral_bonus_join");
+                    $referralBonusEarnedJoin = number_format((float)($bonuzAmount * (1 + ($referral_bonus_join / 100))), 2, '.', '');
+                    $this->createBonusTransaction($referral->user_id, $added_time, $tnx_date, $stage, $referralBonusEarnedJoin);
+                }
+            }
+
             echo "UserId: $userId --- $iid";
         }
 
@@ -548,6 +570,52 @@ class TokenController extends Controller
         //     // return response()->json($ret);
         //     return "";
         // }
+    }
+
+    public function createBonusTransaction($userId, $added_time, $tnx_date, $stage, $amount, $referred = null)
+    {
+        $tnx_type = 'referral';
+
+        $extra = '';
+        if ($referred != null) {
+            $extra = [
+                'who' => $referred
+            ];
+            $extra = json_encode($extra);
+        }
+
+        $save_data = [
+            'user' => $userId,
+            'created_at' => $added_time,
+            'tnx_id' => set_id(rand(100, 999), 'trnx'),
+            'tnx_type' => $tnx_type,
+            'tnx_time' => $tnx_date,
+            'tokens' => $amount,
+            'bonus_on_base' => '0',
+            'bonus_on_token' => '0',
+            'total_bonus' => '0',
+            'total_tokens' => $amount,
+            'stage' => $stage,
+            'receive_amount' => $amount,
+            'receive_currency' => 'BONUZ',
+            'base_amount' => '0.33',
+            'base_currency' => 'USD',
+            'base_currency_rate' => '0.33',
+            'currency' => 'BONUZ',
+            'currency_rate' => 0,
+            'all_currency_rate' => 0,
+            'payment_method' => 'referral',
+            // TODO add payment to
+            // 'payment_to' => '',
+            'payment_id' => rand(1000, 9999),
+            'details' => 'Referral Bonus',
+            'status' => 'approved',
+            'wallet_address' => '',
+            'network' => '',
+            'amount' => $amount,
+            'extra' => $extra
+        ];
+        return Transaction::insertGetId($save_data);
     }
 
     public function addBscWallet(Request $request)
