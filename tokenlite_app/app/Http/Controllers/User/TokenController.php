@@ -554,12 +554,12 @@ class TokenController extends Controller
 
                     // Referral (who referred)
                     $referral_bonus = get_setting("referral_bonus");
-                    $referralBonusEarned = number_format((float)($bonuzAmountRaw * (1 + ($referral_bonus / 100))), 2, '.', '');
+                    $referralBonusEarned = number_format((float)($bonuzAmountRaw * (0 + ($referral_bonus / 100))), 2, '.', '');
                     $this->createBonusTransaction($referral->refer_by, $added_time, $tnx_date, $stage, $referralBonusEarned, $referral->user_id);
 
                     // Referral Joined (who was referred)
                     $referral_bonus_join = get_setting("referral_bonus_join");
-                    $referralBonusEarnedJoin = number_format((float)($bonuzAmountRaw * (1 + ($referral_bonus_join / 100))), 2, '.', '');
+                    $referralBonusEarnedJoin = number_format((float)($bonuzAmountRaw * (0 + ($referral_bonus_join / 100))), 2, '.', '');
                     $this->createBonusTransaction($referral->user_id, $added_time, $tnx_date, $stage, $referralBonusEarnedJoin);
                 }
             }
