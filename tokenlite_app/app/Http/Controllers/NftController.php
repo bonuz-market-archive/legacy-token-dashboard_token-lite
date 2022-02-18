@@ -21,9 +21,9 @@ class NftController extends Controller
         return response()->json($nftData);
     }
 
-    public function getNft(Request $request)
+    public function getNft($id)
     {
-        $id = $request->input('id');
+        // $id = $request->input('id');
 
         $nft = NFT::where('instagramid', '=', $id)
             ->first();
