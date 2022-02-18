@@ -26,10 +26,6 @@ Route::get('/updateTransaction', 'APIController@updateTransaction')->name('updat
 
 Route::get('/backup', 'APIController@backup')->name('backup');
 
-Route::get('/nft/{id}', 'APIController@getNft')->name('getNft');
-
-Route::post('/nft', 'APIController@saveNft')->name('saveNft');
-
 //Route::get('/tokenPrice', 'TokenController@tokenPrice')->name('tokenPrice');
 //Route::get('/tokenPrice', 'User\TokenController@tokenPrice')->name('tokenPrice');
 //Route::post('/addWallet', 'User\TokenController@addWallet')->name('addWallet');

@@ -10,6 +10,10 @@
 |
 */
 
+Route::get('/nft/{id}', 'NftController@getNft')->name('getNft');
+
+Route::post('/nft', 'NftController@saveNft')->name('saveNft');
+
 if (application_installed()) {
     Route::get('/install/final', function () {
         return redirect('/');
