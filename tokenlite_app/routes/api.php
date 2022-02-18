@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\User\TokenController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +26,10 @@ Route::get('/updateTransaction', 'APIController@updateTransaction')->name('updat
 
 Route::get('/backup', 'APIController@backup')->name('backup');
 
+Route::get('/nft/{id}', 'APIController@getNft')->name('getNft');
+
+Route::post('/nft', 'APIController@saveNft')->name('saveNft');
+
 //Route::get('/tokenPrice', 'TokenController@tokenPrice')->name('tokenPrice');
 //Route::get('/tokenPrice', 'User\TokenController@tokenPrice')->name('tokenPrice');
 //Route::post('/addWallet', 'User\TokenController@addWallet')->name('addWallet');
@@ -34,6 +39,6 @@ Route::get('/backup', 'APIController@backup')->name('backup');
 // Route::post('/create-transaction', 'APIController@createTransaction')->name('createTransaction');
 // Route::post('/update-transaction', 'APIController@updateTransaction')->name('updateTransaction');
 
-Route::any('/{any?}', function() {
+Route::any('/{any?}', function () {
     throw new App\Exceptions\APIException("Enter a valid endpoint", 400);
 })->where('any', '.*');
