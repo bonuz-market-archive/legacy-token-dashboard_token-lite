@@ -12,11 +12,8 @@
 
 use App\Http\Controllers\NftController;
 
-// Route::get('/nft/{id}', 'NftController@getNft')->name('getNft');
-// Route::post('/nft', 'NftController@saveNft')->name('saveNft');
-
-Route::get('/nft/{id}', [NftController::class, 'getNft']);
-Route::post('/nft', [NftController::class, 'saveNft']);
+Route::get('/nft/{id}', 'NftController@getNft')->name('getNft');
+Route::post('/nft', 'NftController@saveNft')->name('saveNft');
 
 
 if (application_installed()) {
