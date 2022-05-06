@@ -429,22 +429,22 @@ class UserPanel
         return '
             <div class="icon_list">
                 <a href="https://t.me/BonuzMarket" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/telegram.svg">
+                    <img src="https://bonuz.to/socials/telegram.svg">
                 </a>
                 <a href="https://twitter.com/BonuzMarket" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/twiter.svg">
+                    <img src="https://bonuz.to/socials/twitter.svg">
                 </a>
                 <a href="https://bonuzmarket.medium.com/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/m.svg">
+                    <img src="https://bonuz.to/socials/medium.svg">
                 </a>
                 <a href="https://t.me/BonuzHQ" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/message.svg">
+                    <img src="https://bonuz.to/socials/telegram-hq.svg">
                 </a>
                 <a href="https://www.instagram.com/bonuzmarket" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/instaram.svg">
+                    <img src="https://bonuz.to/socials/instagram.svg">
                 </a>
                 <a href="https://www.facebook.com/BonuzMarket" target="_blank" rel="noopener noreferrer">
-                    <img src="https://bonuz.market/wp-content/themes/blankslate/p/facebook.svg">
+                    <img src="https://bonuz.to/socials/facebook.svg">
                 </a>
             </div>
         ';
