@@ -2020,7 +2020,7 @@ class BaseTranslate
                 "load" => 0
               ],
               "dashboard.invite_friends" => [
-                "text" => "Invite your friends & family.",
+                "text" => "Invite your friends and earn 5% \$BONUZ Tokens on their investment. Additionally, they will receive 5% more \$BONUZ Tokens. A Win/Win for everyone.",
                 "pages" => "dashboard, global",
                 "panel" => "any",
                 "load" => 0

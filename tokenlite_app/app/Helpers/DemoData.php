@@ -581,7 +581,7 @@ class DemoData extends IcoHandler
                 'slug' => 'referral',
                 'custom_slug' => 'referral',
                 'menu_title' => 'Referral',
-                'description' => "Invite your friends and family and receive free tokens. \nThe referral link may be used during a token contribution, in the pre-sale and the ICO. \n\nImagine giving your unique referral link to your crypto-friend and he or she contributes tokens using your link, the bonus will be sent to your account automatically. The strategy is simple: the more links you send to your colleagues, family and friends - the more tokens you may earn!",
+                'description' => "Invite your friends to receive 5% extra \$BONUZ tokens for you an extra 5% \$BONUZ tokens for them. Win / Win both side.\n\nThe referral link may be used during a token contribution, in the pre-sale and any other round on this Dashboard.\n\nImagine giving your unique referral link to your friend and he or she contributes using your link, the 5% bonus of \$BONUZ will be sent to both of your accounts automatically. The strategy is simple: the more links you send to your colleagues, family and friends - the more tokens you may earn!\n\nRemember it's not one-sided. Your friends will also receive an additional 5% \$BONUZ on top of their investment.",
                 'status' => 'hide',
                 'lang' => 'en',
                 'public' => 0
