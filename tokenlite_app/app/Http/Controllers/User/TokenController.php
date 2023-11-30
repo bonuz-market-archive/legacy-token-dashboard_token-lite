@@ -391,7 +391,7 @@ class TokenController extends Controller
         $token = $request->input('token');
         // TODO: fix -> it should be bonuz amount
         $usdAmount = $request->input('bonuzAmount');
-        $bonuzAmountRaw = (float)($usdAmount / 0.33);
+        $bonuzAmountRaw = (float)($usdAmount / 0.05);
         $bonuzAmount = number_format($bonuzAmountRaw, 2, '.', '');
 
         $tokenAmount = $request->input('tokenAmount');
@@ -450,7 +450,7 @@ class TokenController extends Controller
             // TODO: currency rate etc
             $currency_rate = 0;
             $base_currency = "usd";
-            $base_currency_rate = '0.33';
+            $base_currency_rate = '0.05';
             $all_currency_rate = 0;
 
             $added_time = Carbon::now()->toDateTimeString();
@@ -599,9 +599,9 @@ class TokenController extends Controller
             'stage' => $stage,
             'receive_amount' => $amount,
             'receive_currency' => 'BONUZ',
-            'base_amount' => '0.33',
+            'base_amount' => '0.05',
             'base_currency' => 'USD',
-            'base_currency_rate' => '0.33',
+            'base_currency_rate' => '0.05',
             'currency' => 'BONUZ',
             'currency_rate' => 0,
             'all_currency_rate' => 0,
