@@ -58,7 +58,31 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
 </div>
 @endif
 <div class="content-area card">
-
+<style>
+        /* Style for the fixed div */
+        #phoneMessage {
+            display: none;
+            position: fixed;
+            top: 58px;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            border: 1px solid #d6d6d6;
+            border-radius: 0;
+            background-color: #f8d7da; /* Bootstrap's alert-danger background color */
+            color: #721c24; /* Bootstrap's alert-danger text color */
+            z-index: 1000; /* Set a high z-index to make sure it appears above other elements */
+        }
+        @media only screen and (max-width: 540px) {
+        #phoneMessage {
+          display: block;
+        }
+      }
+    </style>
+    <div id='phoneMessage' class="alert alert-danger">
+    Please use a desktop to buy BONUZ tokens
+    </div>
     <!-- Wallet Integration -->
     <div id="buy-token-widget"></div>
 
