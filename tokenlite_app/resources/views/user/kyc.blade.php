@@ -51,7 +51,11 @@ $kyc_desc = ($user_kyc !== NULL && isset($_GET['thank_you'])) ? __('Verify your 
                                 </div>
                                 <div class="gaps-1x"></div>
                                 <!-- <button class="btn btn-primary" type="submit">{{__('Proceed to Verify')}}</button> -->
-                                <a id="kyc-toggle-me" href="#" class="btn btn-primary" target="_blank" rel="noopener noreferrer">{{__('Click here to complete your KYC')}}</a>
+                                <button id="blockpass-kyc-connect">{{__('Click here to complete your KYC')}}</button>
+                                <script>
+                                    const blockpass = new BlockpassKYCConnect("YOUR_CLIENT_ID");
+                                    blockpass.startKYCConnect();
+                                </script>
                             </div>{{-- .step-fields --}}
                         </div>
 

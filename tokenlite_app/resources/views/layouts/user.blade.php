@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset(style_theme('vendor')) }}">
     <link rel="stylesheet" href="{{ asset(style_theme('user')) }}">
     <script src="{{ asset('assets/js/buytokenwidget/js/bundle.min.js?v=4') }}"></script>
+    <script src="https://cdn.blockpass.org/widget/scripts/release/3.0.2/blockpass-kyc-connect.prod.js"></script>
     @stack('header')
     @if(get_setting('site_header_code', false))
     {{ html_string(get_setting('site_header_code')) }}
