@@ -53,7 +53,7 @@ $kyc_desc = ($user_kyc !== NULL && isset($_GET['thank_you'])) ? __('Verify your 
                                 <!-- <button class="btn btn-primary" type="submit">{{__('Proceed to Verify')}}</button> -->
                                 <button id="blockpass-kyc-connect">{{__('Click here to complete your KYC')}}</button>
                                 <script>
-                                    const blockpass = new BlockpassKYCConnect("YOUR_CLIENT_ID");
+                                    const blockpass = new BlockpassKYCConnect("bonuz_public_kyc_67c49");
                                     blockpass.startKYCConnect();
                                 </script>
                             </div>{{-- .step-fields --}}
