@@ -48,8 +48,9 @@ class KycController extends Controller
     public function index()
     {
         $user_kyc = Auth::user()->kyc_info;
+        $user = Auth::user();
 
-        return view('user.kyc', compact('user_kyc'));
+        return view('user.kyc', compact('user_kyc', 'user'));
     }
 
     /**
